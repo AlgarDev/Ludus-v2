@@ -2,7 +2,7 @@
 
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <box2d/box2d.h>
+#include <Box2D/Box2D.h>
 #include <iostream>
 
 GLuint loadTexture()
@@ -36,8 +36,9 @@ GLuint Renderer::GenerateTexture() {
     return TextureIdCount++;
 }
 void Renderer::init() {
+    World = new b2World(b2Vec2(0, 0));
     this->WindowFlags = SDL_WINDOW_OPENGL;
-    this->Window = SDL_CreateWindow("Running Ludus", 0, 0, WinWidth, WinHeight, WindowFlags);
+    this->Window = SDL_CreateWindow("Running Ludus", 50, 50, WinWidth, WinHeight, WindowFlags);
     this->Context = SDL_GL_CreateContext(Window);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -48,20 +49,22 @@ void Renderer::init() {
     glClearColor(0.f, 0.f, 0.f, 1.f);
 };
 
+Square *Renderer::addObject(float x, float y, float width, float height) {
+    Square* result = new Square(x, y, width, height, World);
+    objects.push_front(result);
+    return result;
+
+}
+
 void Renderer::Render() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glColor3f(0.0f, 1.0f, 0.0f);
-    glBegin(GL_QUADS);
-    glVertex2f(-0.5f, -0.5f);
-    glVertex2f(0.5f, -0.5f);
-    glVertex2f(0.5f, 0.5f);
-    glVertex2f(-0.5f, 0.5f);
-    glEnd();
-
+    std::list<Square*>::iterator it;
+    for (it = objects.begin(); it != objects.end(); ++it)
+        (*it)->render();
     SDL_GL_SwapWindow(Window);
 };
 
@@ -75,7 +78,6 @@ void Renderer::Events(SDL_Event* event) {
 };
 
 void Renderer::run() {
-    init();
     // Event handler
     SDL_Event event;
     // Main application loop

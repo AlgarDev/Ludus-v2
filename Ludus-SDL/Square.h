@@ -1,19 +1,26 @@
 #pragma once
+#include "Square.h"
 #include <SDL.h>
 #include <SDL_opengl.h>
-#include <box2d/box2d.h>
+#include <Box2D/Box2D.h>
 #include <iostream>
+#include <functional>
 class Square
 {
 public:
+	char type;
 	void render();
-	void move(float dx, float dy, float rotation);
-	Square(int x, int y, int width, int height);
+	std::function<void(Square*)> movement_fun;
+	void setMovementFun(std::function<void(Square*)> movement_fun);
+	Square(float x, float y, float width, float height, b2World *World);
+	void move(float dx, float dy, float rotation, char movementType);
 
 private:
+	float width;
+	float height;
 	b2BodyDef bdef;
 	b2PolygonShape* pshape;
 	b2FixtureDef fdef;
+	b2Body* Body;
 
 };
-
