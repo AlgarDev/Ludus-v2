@@ -25,5 +25,5 @@ public:
     void init();
     Renderer(int WinWidth, int WinHeight);
     void run();
-    Square *addObject(float x, float y, float width, float height);
+    Square *addObject(float x, float y, float width, float height, const char* image_path);
 };

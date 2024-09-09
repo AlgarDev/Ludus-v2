@@ -47,10 +47,12 @@ void Renderer::init() {
     glLoadIdentity();
     glEnable(GL_TEXTURE_2D);
     glClearColor(0.f, 0.f, 0.f, 1.f);
+    glEnable(GL_TEXTURE_2D);
 };
 
-Square *Renderer::addObject(float x, float y, float width, float height) {
-    Square* result = new Square(x, y, width, height, World);
+Square *Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
+    Texture* texture = new Texture(image_path);
+    Square* result = new Square(x, y, width, height, World, texture);
     objects.push_front(result);
     return result;
 

@@ -5,6 +5,7 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 #include <functional>
+#include "Texture.h"
 class Square
 {
 public:
@@ -12,10 +13,11 @@ public:
 	void render();
 	std::function<void(Square*)> movement_fun;
 	void setMovementFun(std::function<void(Square*)> movement_fun);
-	Square(float x, float y, float width, float height, b2World *World);
+	Square(float x, float y, float width, float height, b2World *World, Texture* texture);
 	void move(float dx, float dy, float rotation, char movementType);
 
 private:
+	Texture* texture;
 	float width;
 	float height;
 	b2BodyDef bdef;
