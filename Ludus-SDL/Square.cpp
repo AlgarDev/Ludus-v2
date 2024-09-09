@@ -3,12 +3,16 @@
 Square::Square(float x, float y, float width, float height, b2World* World, Texture* texture) {
 	bdef.type = b2_dynamicBody;
 	bdef.position.Set(x, y);
+	bdef.bullet = true;
+	fdef.isSensor = true;
 	Body = World->CreateBody(&bdef);
 	pshape = new b2PolygonShape();
 	pshape->SetAsBox(width, height);
 	this->texture = texture;
 	fdef.shape = pshape;
 	fdef.density = 1;
+	fdef.restitution = 0.0f;
+	fdef.friction = 1;
 	Body->CreateFixture(&fdef);
 	this->width = width;
 	this->height = height;
@@ -23,16 +27,16 @@ void Square::render() {
 	glBegin(GL_QUADS);
 
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex2f(x, y);
+	glVertex2f(x - (width /2.f), y - (height/2.f));
 	
 	glTexCoord2f(1.0f, 0.0f);
-	glVertex2f(x + width, y);
+	glVertex2f(x + (width/2.f), y - (height / 2.f));
 	
 	glTexCoord2f(1.0f, 1.0f);
-	glVertex2f(x + width, y + height);
+	glVertex2f(x + (width / 2.f), y + (height / 2.f));
 	
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex2f(x , y + height);
+	glVertex2f(x - (width / 2.f), y + (height / 2.f));
 	
 	glEnd();
 }

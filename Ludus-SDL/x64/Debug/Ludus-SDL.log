@@ -1,28 +1,2 @@
-﻿  Application.cpp
-C:\Users\Ricardo\Desktop\Code\Ludus-v2\Ludus-SDL\Application.cpp(13,57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-box2d.lib(b2_collide_circle.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_collide_circle.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_collide_edge.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_collide_edge.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_collide_polygon.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_collide_polygon.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_collision.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_collision.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_distance.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_distance.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_dynamic_tree.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_dynamic_tree.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_edge_shape.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_edge_shape.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_polygon_shape.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_polygon_shape.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_time_of_impact.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_time_of_impact.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_math.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_math.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_body.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_body.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_contact_solver.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_contact_solver.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_distance_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_distance_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_friction_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_friction_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_gear_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_gear_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_island.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_island.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_motor_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_motor_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_mouse_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_mouse_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_prismatic_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_prismatic_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_pulley_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_pulley_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_revolute_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_revolute_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_weld_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_weld_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_wheel_joint.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_wheel_joint.obj)' or at ''; linking object as if no debug info
-box2d.lib(b2_world.obj) : warning LNK4099: PDB '' was not found with 'box2d.lib(b2_world.obj)' or at ''; linking object as if no debug info
+﻿  Square.cpp
   Ludus-SDL.vcxproj -> C:\Users\Ricardo\Desktop\Code\Ludus-v2\x64\Debug\Ludus-SDL.exe

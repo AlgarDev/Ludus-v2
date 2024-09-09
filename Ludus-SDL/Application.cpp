@@ -19,7 +19,7 @@ void testDefineMovement(Square* entity, Renderer* renderer, float deltaTime) {
 int main() {
 	Renderer *render = new Renderer(WinWidth, WinHeight);
 	render->init(0, 0); //Gravidade X e Gravidade Y
-	//Square *pointerToObject = render->addObject(-0.5f, -0.5f, 4.f, 4.f, "./Resources/Burner1.bmp");
+	Square *pointerToObject = render->addObject(8.f, 3.f, 1.f, 1.f, "./Resources/Burner1.bmp");
 
 	Square* PointerToAnotherObject = render->addObject(1.f, 1.f, 2.f, 5.f, "./Resources/Xlogo.bmp");
 	PointerToAnotherObject->setMovement(testDefineMovement);
