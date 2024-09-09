@@ -4,7 +4,12 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 #include <list>
+#include <chrono>
 #include "Square.h"
+
+#define HEADER_RENDERER
+class Square;
+
 class Renderer
 {
 private:
@@ -19,11 +24,13 @@ private:
     void Render();
     void Events(SDL_Event* event);
     GLuint GenerateTexture();
+    void Update(float elapsed);
+
 
 
 public:
-    void init();
+    void init(float dx, float dy);
     Renderer(int WinWidth, int WinHeight);
     void run();
-    Square *addObject(float x, float y, float width, float height, const char* image_path);
+    Square* addObject(float x, float y, float width, float height, const char* image_path);
 };

@@ -1,32 +1,5 @@
 #include "Renderer.h"
 
-#include <SDL.h>
-#include <SDL_opengl.h>
-#include <Box2D/Box2D.h>
-#include <iostream>
-
-GLuint loadTexture()
-{
-    const unsigned char data[] =
-    {
-        255,   0,   0,    0, 255,   0,
-          0,   0, 255,  255, 255, 255,
-    };
-    const GLsizei width = 2;
-    const GLsizei height = 2;
-
-    GLuint textureID = 0;
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-    return textureID;
-}
-
 Renderer::Renderer(int WinWidth, int WinHeight) {
     this->WinWidth = WinWidth;
     this->WinHeight = WinHeight;
@@ -35,8 +8,8 @@ Renderer::Renderer(int WinWidth, int WinHeight) {
 GLuint Renderer::GenerateTexture() {
     return TextureIdCount++;
 }
-void Renderer::init() {
-    World = new b2World(b2Vec2(0, 0));
+void Renderer::init(float dx, float dy) {
+    World = new b2World(b2Vec2(dx, dy));
     this->WindowFlags = SDL_WINDOW_OPENGL;
     this->Window = SDL_CreateWindow("Running Ludus", 50, 50, WinWidth, WinHeight, WindowFlags);
     this->Context = SDL_GL_CreateContext(Window);
@@ -50,12 +23,11 @@ void Renderer::init() {
     glEnable(GL_TEXTURE_2D);
 };
 
-Square *Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
+Square* Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
     Texture* texture = new Texture(image_path);
     Square* result = new Square(x, y, width, height, World, texture);
     objects.push_front(result);
     return result;
-
 }
 
 void Renderer::Render() {
@@ -70,6 +42,12 @@ void Renderer::Render() {
     SDL_GL_SwapWindow(Window);
 };
 
+void Renderer::Update(float elapsed) {
+    std::list<Square*>::iterator it;
+    for (it = objects.begin(); it != objects.end(); ++it)
+        (*it)->update(this, elapsed);
+}
+
 void Renderer::Events(SDL_Event* event) {
     while (SDL_PollEvent(event) != 0) {
         // User requests to close the window
@@ -83,10 +61,19 @@ void Renderer::run() {
     // Event handler
     SDL_Event event;
     // Main application loop
+    const int VELOCITY_ITERAIONS = 6;
+    const int POSITION_ITERATION = 2;
+    double elapsed = 1;
     while (Running) {
         // Handle events in the queue
+        auto start = std::chrono::high_resolution_clock::now();
         Events(&event);
+        Update(elapsed);
         Render();
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> duration = end - start;
+       elapsed = duration.count() / 1000.0;
+        World->Step(elapsed, VELOCITY_ITERAIONS, POSITION_ITERATION);
     }
     // Clean up and close the window
     SDL_DestroyWindow(Window);
