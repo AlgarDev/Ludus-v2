@@ -1,9 +1,9 @@
 #pragma once
-
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <Box2D/Box2D.h>
 #include <iostream>
+
 class Texture
 {
 public:

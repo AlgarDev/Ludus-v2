@@ -5,23 +5,22 @@
 #include <iostream>
 #include <list>
 #include <chrono>
-#include "Square.h"
+#include "Player.h"
 
-#define HEADER_RENDERER
-class Square;
+class Player;
 
 class Renderer
 {
 private:
-    std::list<Square*> objects;
+    std::list<Player*> objects;
     b2World* World;
     SDL_Window* Window;
     SDL_GLContext Context;
     uint32_t WindowFlags;
+    int elapsed;
     bool Running = true;
     int WinWidth, WinHeight;
     GLuint TextureIdCount;
-    void Render();
     void Events(SDL_Event* event);
     GLuint GenerateTexture();
     void Update(float elapsed);
@@ -29,8 +28,9 @@ private:
 
 
 public:
+    void Render();
     void init(float dx, float dy);
     Renderer(int WinWidth, int WinHeight);
     void run();
-    Square* addObject(float x, float y, float width, float height, const char* image_path);
+    Player* addObject(float x, float y, float width, float height, const char* image_path);
 };

@@ -16,57 +16,39 @@ Square::Square(float x, float y, float width, float height, b2World* World, Text
 	Body->CreateFixture(&fdef);
 	this->width = width;
 	this->height = height;
-	this->time = 0;
 }
 
 void Square::render() {
 	float x = Body->GetPosition().x;
 	float y = Body->GetPosition().y;
-	texture->Apply();
-
-	glBegin(GL_QUADS);
-
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex2f(x - (width /2.f), y - (height/2.f));
+    float angle = Body->GetAngle();
 	
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex2f(x + (width/2.f), y - (height / 2.f));
-	
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex2f(x + (width / 2.f), y + (height / 2.f));
-	
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex2f(x - (width / 2.f), y + (height / 2.f));
-	
-	glEnd();
-}
+    texture->Apply();
 
-void Square::move(float dx, float dy, float rotation, char movementType) {
-	switch (movementType)
-	{
-	case 'f':
-		//apply gradual force upwards
-		Body->ApplyForce(b2Vec2(dx, dy), Body->GetWorldCenter(), true);
-		break;
-	case 'i':
-		//apply immediate force upwards
-		Body->ApplyLinearImpulse(b2Vec2(dx, dy), Body->GetWorldCenter(), true);
-		break;
-	case 't':
-		//teleport or 'warp' to new location
-		Body->SetTransform(b2Vec2(dx, dy), 0);
-		break;
-	default:
-		return;
-	}
-}
+    glPushMatrix(); // Save the current matrix state
 
-void Square::update(Renderer *renderer, float deltaTime) {
-	time += deltaTime;
-	if( movement != nullptr )
-		movement(this, renderer, deltaTime);
-}
+    // Translate to the square's position
+    glTranslatef(x, y, 0.0f);
 
-void Square::setMovement(std::function<void(Square*,Renderer*,float)> movement) {
-	this->movement = movement;
+    // Apply the rotation (angle in radians converted to degrees)
+    glRotatef(angle * 180.0f / 3.14159f, 0.0f, 0.0f, 1.0f); // Rotate around the Z-axis (2D rotation)
+
+    // Render the square
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(-width / 2.f, -height / 2.f);
+
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(width / 2.f, -height / 2.f);
+
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(width / 2.f, height / 2.f);
+
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(-width / 2.f, height / 2.f);
+
+    glEnd();
+
+    glPopMatrix(); // Restore the original matrix state
 }

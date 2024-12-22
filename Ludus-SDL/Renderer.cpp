@@ -23,9 +23,9 @@ void Renderer::init(float dx, float dy) {
     glEnable(GL_TEXTURE_2D);
 };
 
-Square* Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
+Player* Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
     Texture* texture = new Texture(image_path);
-    Square* result = new Square(x, y, width, height, World, texture);
+    Player* result = new Player(x, y, width, height, World, texture);
     objects.push_front(result);
     return result;
 }
@@ -36,14 +36,14 @@ void Renderer::Render() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    std::list<Square*>::iterator it;
+    std::list<Player*>::iterator it;
     for (it = objects.begin(); it != objects.end(); ++it)
         (*it)->render();
     SDL_GL_SwapWindow(Window);
 };
 
 void Renderer::Update(float elapsed) {
-    std::list<Square*>::iterator it;
+    std::list<Player*>::iterator it;
     for (it = objects.begin(); it != objects.end(); ++it)
         (*it)->update(this, elapsed);
 }
@@ -61,19 +61,22 @@ void Renderer::run() {
     // Event handler
     SDL_Event event;
     // Main application loop
-    const int VELOCITY_ITERAIONS = 6;
-    const int POSITION_ITERATION = 2;
-    double elapsed = 1;
+    const int VELOCITY_ITERATIONS = 8;
+    const int POSITION_ITERATIONS = 3;
+    double elapsed = 0;
+    auto lastIteration = std::chrono::high_resolution_clock::now();
     while (Running) {
-        // Handle events in the queue
-        auto start = std::chrono::high_resolution_clock::now();
+        auto currentIteration = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> duration = currentIteration - lastIteration;
+        elapsed = duration.count();
         Events(&event);
         Update(elapsed);
         Render();
         auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> duration = end - start;
-       elapsed = duration.count() / 1000.0;
-        World->Step(elapsed, VELOCITY_ITERAIONS, POSITION_ITERATION);
+        World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+        printf("%f\n", elapsed);
+        lastIteration = currentIteration;
+        Sleep(16);
     }
     // Clean up and close the window
     SDL_DestroyWindow(Window);
