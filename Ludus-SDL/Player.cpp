@@ -3,6 +3,8 @@
 Player::Player(float x, float y, float width, float height, b2World* World, Texture* texture) 
 : Square(x, y, width, height, World, texture){
 	this->time = 0;
+	this->texture->spriteColumn = 3; //Default Player
+	this->texture->spriteRow = 0; //Default Player
 }
 
 void Player::move(float dx, float dy, float rotation, char movementType) {

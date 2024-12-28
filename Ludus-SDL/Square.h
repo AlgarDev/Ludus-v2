@@ -13,12 +13,11 @@ public:
 	Square(float x, float y, float width, float height, b2World *World, Texture* texture);
 
 protected:
-	Texture* texture;
 	float width;
 	float height;
 	b2BodyDef bdef;
 	b2PolygonShape* pshape;
 	b2FixtureDef fdef;
 	b2Body* Body;
-
+	Texture* texture;
 };

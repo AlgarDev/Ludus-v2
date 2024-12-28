@@ -7,9 +7,13 @@
 class Texture
 {
 public:
-    Texture(const char* image_path);
+    Texture(const char* image_path, int numberOfRows, int numberOfColumns);
     void Apply();
-private:
+    void moveSprite(int row, int column);
     GLuint textures;
     SDL_Surface* image;
+    float spriteWidth;
+    int spriteColumn;
+    int spriteRow;
+    float spriteHeight;
 };

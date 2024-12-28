@@ -12,7 +12,7 @@ class Player;
 class Renderer
 {
 private:
-    std::list<Player*> objects;
+    Player *PlayerVar;
     b2World* World;
     SDL_Window* Window;
     SDL_GLContext Context;
@@ -32,5 +32,5 @@ public:
     void init(float dx, float dy);
     Renderer(int WinWidth, int WinHeight);
     void run();
-    Player* addObject(float x, float y, float width, float height, const char* image_path);
+    void* addObject(float x, float y, float width, float height, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns);
 };

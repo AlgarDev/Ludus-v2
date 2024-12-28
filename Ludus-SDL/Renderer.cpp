@@ -23,11 +23,13 @@ void Renderer::init(float dx, float dy) {
     glEnable(GL_TEXTURE_2D);
 };
 
-Player* Renderer::addObject(float x, float y, float width, float height, const char* image_path) {
-    Texture* texture = new Texture(image_path);
-    Player* result = new Player(x, y, width, height, World, texture);
-    objects.push_front(result);
-    return result;
+void* Renderer::addObject(float x, float y, float width, float height, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns) {
+    Texture* texture = new Texture(image_path, numberOfRows, numberOfColumns);
+    if(isPlayer){
+        PlayerVar = new Player(x, y, width, height, World, texture);
+        return (void*)PlayerVar;
+    }
+    return (void*)texture;
 }
 
 void Renderer::Render() {
@@ -36,16 +38,12 @@ void Renderer::Render() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    std::list<Player*>::iterator it;
-    for (it = objects.begin(); it != objects.end(); ++it)
-        (*it)->render();
+    PlayerVar->render();
     SDL_GL_SwapWindow(Window);
 };
 
 void Renderer::Update(float elapsed) {
-    std::list<Player*>::iterator it;
-    for (it = objects.begin(); it != objects.end(); ++it)
-        (*it)->update(this, elapsed);
+    PlayerVar->update(this, elapsed);
 }
 
 void Renderer::Events(SDL_Event* event) {
@@ -53,6 +51,39 @@ void Renderer::Events(SDL_Event* event) {
         // User requests to close the window
         if (event->type == SDL_QUIT) {
             Running = false;
+        }
+        if (event->type == SDL_KEYDOWN) {
+            switch (event->key.keysym.sym) {
+                case SDLK_w:  // 'W' key pressed
+                    // Handle W key press
+                    break;
+                case SDLK_a:  // 'A' key pressed
+                    // Handle A key press
+                    break;
+                case SDLK_s:  // 'S' key pressed
+                    // Handle S key press
+                    break;
+                case SDLK_d:  // 'D' key pressed
+                    // Handle D key press
+                    break;
+            }
+        }
+        // Handle keyup events (optional)
+        if (event->type == SDL_KEYUP) {
+            switch (event->key.keysym.sym) {
+                case SDLK_w:  // 'W' key released
+                    // Handle W key release
+                    break;
+                case SDLK_a:  // 'A' key released
+                    // Handle A key release
+                    break;
+                case SDLK_s:  // 'S' key released
+                    // Handle S key release
+                    break;
+                case SDLK_d:  // 'D' key released
+                    // Handle D key release
+                    break;
+            }
         }
     }
 };
@@ -74,7 +105,6 @@ void Renderer::run() {
         Render();
         auto end = std::chrono::high_resolution_clock::now();
         World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-        printf("%f\n", elapsed);
         lastIteration = currentIteration;
         Sleep(16);
     }
