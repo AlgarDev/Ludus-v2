@@ -10,10 +10,15 @@ public:
     Texture(const char* image_path, int numberOfRows, int numberOfColumns);
     void Apply();
     void moveSprite(int row, int column);
+    void cycleLeft();
+    void cycleRigth();
+    void fulllCycle();
     GLuint textures;
     SDL_Surface* image;
     float spriteWidth;
     int spriteColumn;
     int spriteRow;
+    int numberOfColumns;
+    int numberOfRows;
     float spriteHeight;
 };

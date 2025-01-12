@@ -18,8 +18,10 @@ public:
 	char type;
 	float time;
 	float dx, dy;
+	float shootDelay = 0.5f;
 	bool willShoot;
 	float lastShootTimestamp;
+	float lastSpriteUpdateTimestamp;
 	void update(Renderer* renderer);
 	Player(float x, float y, float scale, b2World *World, Texture* texture);
 	void update(Renderer* renderer, float deltaTime);
@@ -29,6 +31,8 @@ public:
 	void useKeyboardState(const Uint8* keyboardState);
 
 private:
+	bool canShoot();
+	void shoot();
 	/* std::function<void(Player*,Renderer*,float)> movement; */
 
 };

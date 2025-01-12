@@ -51,6 +51,8 @@ Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) 
     glGenTextures(1, &textures);
     spriteWidth = image->w / numberOfColumns;
     spriteHeight = image->h / numberOfRows;
+    this->numberOfColumns = numberOfColumns;
+    this->numberOfRows = numberOfRows;
     spriteRow = 0;
     spriteColumn = 0;
 }
@@ -65,6 +67,21 @@ void Texture::Apply() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, image->pixels);
+}
+
+void Texture::cycleLeft(){
+    spriteColumn = spriteColumn == 0 ? numberOfColumns : spriteColumn -1;
+}
+
+void Texture::cycleRigth(){
+    spriteColumn = (spriteColumn + 1) % numberOfColumns;
+}
+
+void Texture::fulllCycle(){
+    spriteColumn += 1;
+    spriteRow += spriteColumn/numberOfColumns;
+    spriteColumn %= numberOfColumns;
+    spriteRow %= numberOfColumns;
 }
 
 void Texture::moveSprite(int row, int column){
