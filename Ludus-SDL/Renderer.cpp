@@ -23,10 +23,10 @@ void Renderer::init(float dx, float dy) {
     glEnable(GL_TEXTURE_2D);
 };
 
-void* Renderer::addObject(float x, float y, float width, float height, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns) {
+void* Renderer::addObject(float x, float y, float scale, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns) {
     Texture* texture = new Texture(image_path, numberOfRows, numberOfColumns);
     if(isPlayer){
-        PlayerVar = new Player(x, y, width, height, World, texture);
+        PlayerVar = new Player(x, y, scale, World, texture);
         return (void*)PlayerVar;
     }
     return (void*)texture;
@@ -47,43 +47,19 @@ void Renderer::Update(float elapsed) {
 }
 
 void Renderer::Events(SDL_Event* event) {
+    const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+    PlayerVar->useKeyboardState(currentKeyStates);
     while (SDL_PollEvent(event) != 0) {
         // User requests to close the window
         if (event->type == SDL_QUIT) {
             Running = false;
         }
         if (event->type == SDL_KEYDOWN) {
-            switch (event->key.keysym.sym) {
-                case SDLK_w:  // 'W' key pressed
-                    // Handle W key press
-                    break;
-                case SDLK_a:  // 'A' key pressed
-                    // Handle A key press
-                    break;
-                case SDLK_s:  // 'S' key pressed
-                    // Handle S key press
-                    break;
-                case SDLK_d:  // 'D' key pressed
-                    // Handle D key press
-                    break;
-            }
+            PlayerVar->setAction(event->key.keysym.sym, true);
         }
         // Handle keyup events (optional)
         if (event->type == SDL_KEYUP) {
-            switch (event->key.keysym.sym) {
-                case SDLK_w:  // 'W' key released
-                    // Handle W key release
-                    break;
-                case SDLK_a:  // 'A' key released
-                    // Handle A key release
-                    break;
-                case SDLK_s:  // 'S' key released
-                    // Handle S key release
-                    break;
-                case SDLK_d:  // 'D' key released
-                    // Handle D key release
-                    break;
-            }
+            PlayerVar->setAction(event->key.keysym.sym, false);
         }
     }
 };

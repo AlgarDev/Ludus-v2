@@ -10,11 +10,12 @@ class Square
 {
 public:
 	void render();
-	Square(float x, float y, float width, float height, b2World *World, Texture* texture);
+	Square(float x, float y, float scale, b2World *World, Texture* texture);
 
 protected:
 	float width;
 	float height;
+	float scale;
 	b2BodyDef bdef;
 	b2PolygonShape* pshape;
 	b2FixtureDef fdef;

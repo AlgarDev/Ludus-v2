@@ -14,15 +14,21 @@ class Renderer;
 class Player : public Square
 {
 public:
+
 	char type;
 	float time;
+	float dx, dy;
+	bool willShoot;
+	float lastShootTimestamp;
 	void update(Renderer* renderer);
-	Player(float x, float y, float width, float height, b2World *World, Texture* texture);
+	Player(float x, float y, float scale, b2World *World, Texture* texture);
 	void update(Renderer* renderer, float deltaTime);
-	void move(float dx, float dy, float rotation, char movementType);
-	void setMovement(std::function<void(Player*,Renderer*,float)> movement);
+	void move(float dx, float dy);
+	/* void setMovement(std::function<void(Player*,Renderer*,float)> movement); */
+	void setAction(SDL_Keycode Key, bool KeyDown);
+	void useKeyboardState(const Uint8* keyboardState);
 
 private:
-	std::function<void(Player*,Renderer*,float)> movement;
+	/* std::function<void(Player*,Renderer*,float)> movement; */
 
 };

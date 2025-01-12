@@ -32,5 +32,5 @@ public:
     void init(float dx, float dy);
     Renderer(int WinWidth, int WinHeight);
     void run();
-    void* addObject(float x, float y, float width, float height, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns);
+    void* addObject(float x, float y, float scale, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns);
 };
