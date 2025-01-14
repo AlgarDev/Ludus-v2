@@ -4,17 +4,17 @@
 #include <Box2D/Box2D.h>
 #include <iostream>
 #include <functional>
+#include <list>
 #include "Texture.h"
 #include "Square.h"
-
-#ifndef  HEADER_RENDERER
-class Renderer;
-#endif
+#include "Missile.h"
+#include "Renderer.h"
 
 class Player : public Square
 {
 public:
-
+	std::list<Missile*> missiles;
+	Texture *missileTextures;
 	char type;
 	float time;
 	float dx, dy;
@@ -32,7 +32,7 @@ public:
 
 private:
 	bool canShoot();
-	void shoot();
+	void shoot(Renderer *renderer);
 	/* std::function<void(Player*,Renderer*,float)> movement; */
 
 };

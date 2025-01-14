@@ -11,8 +11,13 @@ class Square
 public:
 	void render();
 	Square(float x, float y, float scale, b2World *World, Texture* texture);
+	virtual bool isActive() const{
+		return true;
+	}
 
 protected:
+	float getX();
+	float getY();
 	float width;
 	float height;
 	float scale;

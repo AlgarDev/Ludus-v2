@@ -4,10 +4,13 @@ Player::Player(float x, float y, float scale, b2World* World, Texture* texture)
 : Square(x, y, scale, World, texture){
 	this->time = 0;
 	this->willShoot = false;
+	this->dx = 0;
+	this->dy = 0;
 	this->lastShootTimestamp = 0;
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 3; //Default Player
 	this->texture->spriteRow = 0; //Default Player
+	this->missileTextures = new Texture("./Resources/missile.bmp", 3, 2);
 }
 
 void Player::move(float dx, float dy) {
@@ -18,15 +21,18 @@ void Player::move(float dx, float dy) {
 }
 
 void Player::update(Renderer *renderer, float deltaTime) {
+	for ( Missile* missile : missiles) {
+        missile->update(renderer, deltaTime);
+    }
 	time += deltaTime;
 	move(this->dx, this->dy);
+	std::cout << willShoot << canShoot() << std::endl;
 	if(willShoot && canShoot()){
-		shoot();
+		shoot(renderer);
 	}
 	if(this->dx > 0 
 	&& this->texture->spriteColumn +1 < this->texture->numberOfColumns 
 	&& this->time - this->lastSpriteUpdateTimestamp >= 0.1f){
-		std::cout << this->texture->spriteColumn << std::endl;
 		this->lastSpriteUpdateTimestamp = this->time;
 		this->texture->cycleRigth();
 	} else if(0 > this->dx
@@ -37,9 +43,12 @@ void Player::update(Renderer *renderer, float deltaTime) {
 	}else if( 0 == this->dx) this->texture->moveSprite(0, 3);
 }
 
-void Player::shoot(){
+void Player::shoot(Renderer *renderer){
 	this->lastShootTimestamp = this->time;
 	std::cout << "SHOOTING" << std::endl;
+	Missile *temp = new Missile( 0, getX(), getY(), scale, renderer->getWorld(), missileTextures);
+	missiles.push_back( temp );
+	renderer->addRender((Square *)temp);
 }
 
 bool Player::canShoot(){

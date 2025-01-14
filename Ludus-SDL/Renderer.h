@@ -6,6 +6,7 @@
 #include <list>
 #include <chrono>
 #include "Player.h"
+#include "Square.h"
 
 class Player;
 
@@ -24,10 +25,13 @@ private:
     void Events(SDL_Event* event);
     GLuint GenerateTexture();
     void Update(float elapsed);
+    std::list<Square*> squares;
 
 
 
 public:
+    b2World* getWorld();
+    void addRender(Square* objectToRender);
     void Render();
     void init(float dx, float dy);
     Renderer(int WinWidth, int WinHeight);

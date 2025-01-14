@@ -32,18 +32,31 @@ void* Renderer::addObject(float x, float y, float scale, const char* image_path,
     return (void*)texture;
 }
 
+b2World* Renderer::getWorld(){
+    return World;
+}
+
+void Renderer::addRender(Square* objectToRender){
+    squares.push_back(objectToRender);
+}
+
 void Renderer::Render() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
+    for(Square* sq : squares){
+        sq->render();
+    }
     PlayerVar->render();
     SDL_GL_SwapWindow(Window);
 };
 
 void Renderer::Update(float elapsed) {
     PlayerVar->update(this, elapsed);
+    squares.remove_if([](Square * sq) {
+        return !sq->isActive();
+    });
 }
 
 void Renderer::Events(SDL_Event* event) {

@@ -19,6 +19,13 @@ Square::Square(float x, float y, float scale, b2World* World, Texture* texture) 
 	Body->CreateFixture(&fdef);
 }
 
+float Square::getX(){
+	return Body->GetPosition().x;
+}
+float Square::getY(){
+	return Body->GetPosition().y;
+}
+
 void Square::render() {
 	float x = Body->GetPosition().x;
 	float y = Body->GetPosition().y;
