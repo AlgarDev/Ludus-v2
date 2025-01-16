@@ -13,6 +13,7 @@ class Scene
 {
     public:
     Scene(Player *player, b2World *World);
+    void addBackground(Square *background);
     void renderScene();
     void updateScene(float deltaTime);
     void keyboardEvent(SDL_Keycode Key, bool KeyDown);
@@ -20,5 +21,6 @@ class Scene
 
     private:
     Player *player;
+    Square *background;
     b2World *World;
 };

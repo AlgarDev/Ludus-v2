@@ -38,7 +38,7 @@ Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) 
             OutputPixels[offset2++] = r;
             OutputPixels[offset2++] = g;
             OutputPixels[offset2++] = b;
-            if(r == 0xFF && g == 0 && b == 0xFF)
+            if( distance(r, g, b, 0xFF, 0x00, 0xFF) < 50)
                 OutputPixels[offset2++] = 0;
             else
                 OutputPixels[offset2++] = 255;
@@ -55,6 +55,15 @@ Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) 
     this->numberOfRows = numberOfRows;
     spriteRow = 0;
     spriteColumn = 0;
+}
+
+
+int Texture::distance(Uint8 x, Uint8 y, Uint8 z, Uint8 x2, Uint8 y2, Uint8 z2){
+    int dx = x2 - x;
+    int dy = y - y2;
+    int dz = z2 - z;
+    int dist = dx + dy + dz;
+    return dist;
 }
 
 void Texture::Apply() {

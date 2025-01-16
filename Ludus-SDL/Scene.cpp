@@ -9,6 +9,7 @@ void Scene::updateScene(float deltaTime){
     player->update(deltaTime);
 }
 void Scene::renderScene(){
+    //background->render();
     player->renderWithDependent();
 }
 void Scene::keyboardEvent(SDL_Keycode Key, bool KeyDown){
@@ -16,4 +17,8 @@ void Scene::keyboardEvent(SDL_Keycode Key, bool KeyDown){
 }
 void Scene::keyboardState(const Uint8* currentKeyStates){
     player->useKeyboardState(currentKeyStates);
+}
+
+void Scene::addBackground(Square *background){
+    this->background = background;
 }

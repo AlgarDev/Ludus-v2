@@ -21,4 +21,6 @@ public:
     int numberOfColumns;
     int numberOfRows;
     float spriteHeight;
+private:
+    int distance(Uint8 x, Uint8 y, Uint8 z, Uint8 x2, Uint8 y2, Uint8 z2);
 };

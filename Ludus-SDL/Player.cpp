@@ -46,7 +46,6 @@ void Player::update(float deltaTime) {
 	missiles.remove_if([](Missile* missile) {
     	return !missile->isActive();
 	});
-	printf("x-%f y-%f\n", getX() ,getY());
 	move(this->dx, this->dy);
 	if(isValidY()){
 		validY = getY();

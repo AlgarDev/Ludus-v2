@@ -9,11 +9,11 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${workspaceFolder}\\Ludus-SDL\\*.cpp", //All Sources
-                "-ID:\\msys32\\mingw64\\include",   //Box2D installed vias msys32
+                "-I${workspaceFolder}\\Dependencies\\mingw64\\include",   //Box2D
                 "-I${workspaceFolder}\\Dependencies\\glfw-3.4.bin.WIN64\\include",  //GLFW
                 "-I${workspaceFolder}\\Dependencies\\SDL2\\include",    //SDL2
-                "-LD:\\msys32\\mingw64\\lib",   //Box2D installed vias msys32
-                "D:\\msys32\\mingw64\\lib\\libbox2d.a", //Box2D installed vias msys32
+                "-L${workspaceFolder}\\Dependencies\\mingw64\\lib",   //Box2D 
+                "${workspaceFolder}\\Dependencies\\mingw64\\lib\\libbox2d.a", //Box2D 
                 "-L${workspaceFolder}\\Dependencies\\glfw-3.4.bin.WIN64\\lib-mingw-w64",
                 "-lglfw3",
                 "-L${workspaceFolder}\\Dependencies\\SDL2\\lib\\x64",

@@ -18,6 +18,11 @@ Square::Square(float x, float y, float scale, b2World* World, Texture* texture) 
 	fdef.restitution = 0.0f;
 	fdef.friction = 1;
 	Body->CreateFixture(&fdef);
+	Body->GetUserData().pointer = (uintptr_t)this;
+}
+
+void Square::removeCollisions(){
+	Body->DestroyFixture(Body->GetFixtureList());
 }
 
 float Square::getX(){

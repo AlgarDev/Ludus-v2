@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/Dependencies/glfw-3.4.bin.WIN64/include/**"
+                "${workspaceFolder}/Dependencies/glfw-3.4.bin.WIN64/include/**",
+                "${workspaceFolder}/Dependencies/SDL2/include/**"
             ],
             "defines": [
                 "_DEBUG",

@@ -10,7 +10,11 @@ class Square
 {
 public:
 	void render();
+	virtual void Collide(Square* other){
+		std::cout << "Base Square collided with another Square." << std::endl;
+	}
 	Square(float x, float y, float scale, b2World *World, Texture* texture);
+	void removeCollisions();
 
 protected:
 	float getX();
