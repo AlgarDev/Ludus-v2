@@ -6,6 +6,8 @@ Player::Player(float x, float y, float scale, b2World* World, Texture* texture)
 	this->willShoot = false;
 	this->dx = 0;
 	this->dy = 0;
+	validX = x;
+	validY = y;
 	this->lastShootTimestamp = 0;
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 3; //Default Player
@@ -20,15 +22,45 @@ void Player::move(float dx, float dy) {
 	Body->SetLinearVelocity(force);
 }
 
-void Player::update(Renderer *renderer, float deltaTime) {
+void Player::setPosition(float x, float y){
+	b2Vec2 newPosition(x, y);  // Create a new vector with the desired coordinates
+	Body->SetTransform(newPosition, Body->GetAngle());
+}
+
+bool Player::isValidX(){
+	return getX() > 0.0f && 10.0f > getX();
+}
+
+bool Player::isValidY(){
+	return getY() > 0.0f && 10.0f > getY();
+}
+
+bool Player::isPositionValid(){
+	return isValidX() && isValidY();
+}
+
+void Player::update(float deltaTime) {
 	for ( Missile* missile : missiles) {
-        missile->update(renderer, deltaTime);
+        missile->update(deltaTime);
     }
-	time += deltaTime;
+	missiles.remove_if([](Missile* missile) {
+    	return !missile->isActive();
+	});
+	printf("x-%f y-%f\n", getX() ,getY());
 	move(this->dx, this->dy);
-	std::cout << willShoot << canShoot() << std::endl;
+	if(isValidY()){
+		validY = getY();
+	}else{
+		setPosition(getX(), validY);
+	}
+	if(isValidX()){
+		validX = getX();
+	}else{
+		setPosition(validX, getY());
+	}
+	time += deltaTime;
 	if(willShoot && canShoot()){
-		shoot(renderer);
+		shoot();
 	}
 	if(this->dx > 0 
 	&& this->texture->spriteColumn +1 < this->texture->numberOfColumns 
@@ -43,18 +75,23 @@ void Player::update(Renderer *renderer, float deltaTime) {
 	}else if( 0 == this->dx) this->texture->moveSprite(0, 3);
 }
 
-void Player::shoot(Renderer *renderer){
+void Player::shoot(){
 	this->lastShootTimestamp = this->time;
 	std::cout << "SHOOTING" << std::endl;
-	Missile *temp = new Missile( 0, getX(), getY(), scale, renderer->getWorld(), missileTextures);
+	Missile *temp = new Missile( 0, getX(), getY(), scale, World, missileTextures);
 	missiles.push_back( temp );
-	renderer->addRender((Square *)temp);
 }
 
 bool Player::canShoot(){
 	return this->time - this->lastShootTimestamp >= this->shootDelay;
 }
 
+void Player::renderWithDependent(){
+	render();
+	for ( Missile* missile : missiles) {
+        missile->render();
+    }
+}
 
 
 void Player::setAction(SDL_Keycode Key, bool KeyDown){
@@ -108,7 +145,7 @@ void Player::useKeyboardState(const Uint8* keyboardState){
 }
 
 /*
-void Player::setMovement(std::function<void(Player*,Renderer*,float)> movement) {
+void Player::setMovement(std::function<void(Player*,Engine*,float)> movement) {
 	this->movement = movement;
 }
 */

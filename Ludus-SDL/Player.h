@@ -8,7 +8,10 @@
 #include "Texture.h"
 #include "Square.h"
 #include "Missile.h"
-#include "Renderer.h"
+#include "Engine.h"
+#include <algorithm>
+
+class Scene;
 
 class Player : public Square
 {
@@ -22,17 +25,22 @@ public:
 	bool willShoot;
 	float lastShootTimestamp;
 	float lastSpriteUpdateTimestamp;
-	void update(Renderer* renderer);
 	Player(float x, float y, float scale, b2World *World, Texture* texture);
-	void update(Renderer* renderer, float deltaTime);
+	void update(float deltaTime);
 	void move(float dx, float dy);
-	/* void setMovement(std::function<void(Player*,Renderer*,float)> movement); */
+	/* void setMovement(std::function<void(Player*,Engine*,float)> movement); */
 	void setAction(SDL_Keycode Key, bool KeyDown);
 	void useKeyboardState(const Uint8* keyboardState);
+	void renderWithDependent();
 
 private:
+	float validX, validY;
+	bool isPositionValid();
+	bool isValidX();
+	bool isValidY();
 	bool canShoot();
-	void shoot(Renderer *renderer);
-	/* std::function<void(Player*,Renderer*,float)> movement; */
+	void shoot();
+	void setPosition(float x, float y);
+	/* std::function<void(Player*,Engine*,float)> movement; */
 
 };

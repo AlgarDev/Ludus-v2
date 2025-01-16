@@ -7,6 +7,7 @@ Square::Square(float x, float y, float scale, b2World* World, Texture* texture) 
 	bdef.bullet = true;
 	fdef.isSensor = true;
 	Body = World->CreateBody(&bdef);
+	this->World = World;
 	pshape = new b2PolygonShape();
 	this->width = texture->spriteWidth;
 	this->height = texture->spriteHeight;

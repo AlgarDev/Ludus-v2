@@ -11,9 +11,6 @@ class Square
 public:
 	void render();
 	Square(float x, float y, float scale, b2World *World, Texture* texture);
-	virtual bool isActive() const{
-		return true;
-	}
 
 protected:
 	float getX();
@@ -26,4 +23,5 @@ protected:
 	b2FixtureDef fdef;
 	b2Body* Body;
 	Texture* texture;
+	b2World* World;
 };

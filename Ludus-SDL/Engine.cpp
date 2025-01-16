@@ -1,15 +1,13 @@
-#include "Renderer.h"
+#include "Engine.h"
 
-Renderer::Renderer(int WinWidth, int WinHeight) {
+Engine::Engine(int WinWidth, int WinHeight) {
     this->WinWidth = WinWidth;
     this->WinHeight = WinHeight;
-    this->TextureIdCount = 0;
 }
-GLuint Renderer::GenerateTexture() {
-    return TextureIdCount++;
-}
-void Renderer::init(float dx, float dy) {
-    World = new b2World(b2Vec2(dx, dy));
+
+void Engine::init(b2World* World, Scene *scene) {
+    this->World = World;
+    this->currentScene = scene;
     this->WindowFlags = SDL_WINDOW_OPENGL;
     this->Window = SDL_CreateWindow("Running Ludus", 50, 50, WinWidth, WinHeight, WindowFlags);
     this->Context = SDL_GL_CreateContext(Window);
@@ -23,61 +21,38 @@ void Renderer::init(float dx, float dy) {
     glEnable(GL_TEXTURE_2D);
 };
 
-void* Renderer::addObject(float x, float y, float scale, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns) {
-    Texture* texture = new Texture(image_path, numberOfRows, numberOfColumns);
-    if(isPlayer){
-        PlayerVar = new Player(x, y, scale, World, texture);
-        return (void*)PlayerVar;
-    }
-    return (void*)texture;
-}
-
-b2World* Renderer::getWorld(){
-    return World;
-}
-
-void Renderer::addRender(Square* objectToRender){
-    squares.push_back(objectToRender);
-}
-
-void Renderer::Render() {
+void Engine::Render() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    for(Square* sq : squares){
-        sq->render();
-    }
-    PlayerVar->render();
+    currentScene->renderScene();
     SDL_GL_SwapWindow(Window);
 };
 
-void Renderer::Update(float elapsed) {
-    PlayerVar->update(this, elapsed);
-    squares.remove_if([](Square * sq) {
-        return !sq->isActive();
-    });
+void Engine::Update(float elapsed) {
+    currentScene->updateScene(elapsed);
 }
 
-void Renderer::Events(SDL_Event* event) {
+void Engine::Events(SDL_Event* event) {
     const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-    PlayerVar->useKeyboardState(currentKeyStates);
+    currentScene->keyboardState(currentKeyStates);
     while (SDL_PollEvent(event) != 0) {
         // User requests to close the window
         if (event->type == SDL_QUIT) {
             Running = false;
         }
         if (event->type == SDL_KEYDOWN) {
-            PlayerVar->setAction(event->key.keysym.sym, true);
+            currentScene->keyboardEvent(event->key.keysym.sym, true);
         }
         // Handle keyup events (optional)
         if (event->type == SDL_KEYUP) {
-            PlayerVar->setAction(event->key.keysym.sym, false);
+            currentScene->keyboardEvent(event->key.keysym.sym, false);
         }
     }
 };
 
-void Renderer::run() {
+void Engine::run() {
     // Event handler
     SDL_Event event;
     // Main application loop

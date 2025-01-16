@@ -7,13 +7,14 @@
 #include <chrono>
 #include "Player.h"
 #include "Square.h"
+#include "Scene.h"
 
 class Player;
+class Scene;
 
-class Renderer
+class Engine
 {
 private:
-    Player *PlayerVar;
     b2World* World;
     SDL_Window* Window;
     SDL_GLContext Context;
@@ -21,11 +22,9 @@ private:
     int elapsed;
     bool Running = true;
     int WinWidth, WinHeight;
-    GLuint TextureIdCount;
     void Events(SDL_Event* event);
-    GLuint GenerateTexture();
     void Update(float elapsed);
-    std::list<Square*> squares;
+    Scene *currentScene;
 
 
 
@@ -33,8 +32,7 @@ public:
     b2World* getWorld();
     void addRender(Square* objectToRender);
     void Render();
-    void init(float dx, float dy);
-    Renderer(int WinWidth, int WinHeight);
+    void init(b2World* World, Scene *scene);
+    Engine(int WinWidth, int WinHeight);
     void run();
-    void* addObject(float x, float y, float scale, const char* image_path, bool isPlayer, int numberOfRows, int numberOfColumns);
 };

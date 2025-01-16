@@ -10,9 +10,9 @@ Missile::Missile(int missileTier, float x, float y, float scale, b2World* World,
 	this->texture->spriteRow = missileTier;
 }
 
-void Missile::update(Renderer *renderer, float deltaTime) {
+void Missile::update(float deltaTime) {
 	time += deltaTime;
-	move(0, -3);
+	move(0, -5);
 	if(this->time - this->lastSpriteUpdateTimestamp >= 0.1f){
 		this->lastSpriteUpdateTimestamp = this->time;
 		this->texture->cycleRigth();
@@ -21,7 +21,9 @@ void Missile::update(Renderer *renderer, float deltaTime) {
 
 void Missile::move(float dx, float dy) {
 	b2Vec2 force(dx,dy);
-	//apply immediate force upwards
-
 	Body->SetLinearVelocity(force);
+}
+
+bool Missile::isActive(){
+	return getY() > 0.0f;
 }

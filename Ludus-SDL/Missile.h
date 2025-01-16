@@ -7,8 +7,8 @@
 #include "Texture.h"
 #include "Square.h"
 
-#ifndef  HEADER_RENDERER
-class Renderer;
+#ifndef  HEADER_Engine
+class Engine;
 #endif
 
 class Missile : public Square
@@ -21,8 +21,8 @@ public:
 	float hitX, hitY;
 	bool isExploding;
     void upgrade();
-	void update(Renderer* renderer);
 	Missile(int missileTier, float x, float y, float scale, b2World *World, Texture* texture);
-	void update(Renderer* renderer, float deltaTime);
+	void update(float deltaTime);
 	void move(float dx, float dy);
+	bool isActive();
 };
