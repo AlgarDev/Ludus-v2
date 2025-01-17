@@ -1,20 +1,25 @@
 #include "Player.h"
 
-Player::Player(float x, float y, float scale, b2World* World, Texture* texture) 
-: Square(x, y, scale, World, texture){
+Player::Player(float x, float y, float scale, b2World* World, Texture *explode) 
+: Square(x, y, scale, World, new Texture("./Resources/Ship1.bmp", 1, 7)){
 	this->time = 0;
 	this->willShoot = false;
 	this->dx = 0;
 	this->dy = 0;
 	validX = x;
 	validY = y;
+	this->tag = 1;
 	this->lastShootTimestamp = 0;
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 3; //Default Player
 	this->texture->spriteRow = 0; //Default Player
 	this->missileTextures = new Texture("./Resources/missile.bmp", 3, 2);
+	this->explosionTexture = explode;
 }
 
+void Player::Collide(Square* other) {
+	printf("Player Hit\n");
+}
 void Player::move(float dx, float dy) {
 	b2Vec2 force(dx,dy);
 	//apply immediate force upwards
@@ -42,9 +47,28 @@ bool Player::isPositionValid(){
 void Player::update(float deltaTime) {
 	for ( Missile* missile : missiles) {
         missile->update(deltaTime);
+		if(missile->isExploding()){
+			Explosion *temp = new Explosion( missile->getX(), missile->getY(), this->scale, this->World, this->explosionTexture);
+			temp->removeCollisions();
+			this->explosions.push_back( temp );
+		}
     }
+	for ( Explosion* explosion : explosions) {
+        explosion->update(deltaTime);
+    }
+	explosions.remove_if([](Explosion* explosion) {
+		if(!explosion->isActive()){
+			delete explosion;
+			return true;
+		}
+		return false;
+	});
 	missiles.remove_if([](Missile* missile) {
-    	return !missile->isActive();
+		if(!missile->isActive()){
+			delete missile;
+			return true;
+		}
+		return false;
 	});
 	move(this->dx, this->dy);
 	if(isValidY()){
@@ -89,6 +113,9 @@ void Player::renderWithDependent(){
 	render();
 	for ( Missile* missile : missiles) {
         missile->render();
+    }
+	for ( Explosion* explosion : explosions) {
+        explosion->render();
     }
 }
 

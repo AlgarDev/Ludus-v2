@@ -11,20 +11,15 @@
 class Engine;
 #endif
 
-class Missile : public Square
+class Explosion : public Square
 {
 public:
-	void Collide(Square* other) override;
-	~Missile();
-	int missileTier;
+	~Explosion();
     float lastSpriteUpdateTimestamp;
 	float time;
-	float hitX, hitY;
-	bool didHit;
+    bool animationFinished;
     void upgrade();
-	Missile(int missileTier, float x, float y, float scale, b2World *World, Texture* texture);
+	Explosion(float x, float y, float scale, b2World *World, Texture* texture);
 	void update(float deltaTime);
-	void move(float dx, float dy);
 	bool isActive();
-	bool isExploding();
 };

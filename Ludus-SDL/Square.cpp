@@ -25,6 +25,25 @@ void Square::removeCollisions(){
 	Body->DestroyFixture(Body->GetFixtureList());
 }
 
+Square::~Square() {
+    // Check if the Box2D shape was dynamically allocated
+    if (pshape) {
+        delete pshape;
+        pshape = nullptr; // Avoid dangling pointers
+    }
+
+    // Remove the body from the Box2D world if it exists
+    if (Body && World) {
+        World->DestroyBody(Body);
+        Body = nullptr; // Avoid dangling pointers
+    }
+
+    // The Texture pointer is not deleted here, assuming it is managed elsewhere
+    // If ownership of `texture` belongs to this class, you may add:
+    // delete texture;
+    // texture = nullptr;
+}
+
 float Square::getX(){
 	return Body->GetPosition().x;
 }

@@ -6,19 +6,22 @@
 #include <functional>
 #include "Texture.h"
 
+
 class Square
 {
 public:
 	void render();
 	virtual void Collide(Square* other){
-		std::cout << "Base Square collided with another Square." << std::endl;
+		std::cout << "Base Square collided with another Square." << tag << " and " << other->tag << std::endl;
 	}
 	Square(float x, float y, float scale, b2World *World, Texture* texture);
+	~Square();
 	void removeCollisions();
-
-protected:
 	float getX();
 	float getY();
+	int tag;
+
+protected:
 	float width;
 	float height;
 	float scale;

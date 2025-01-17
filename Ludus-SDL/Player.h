@@ -9,15 +9,17 @@
 #include "Square.h"
 #include "Missile.h"
 #include "Engine.h"
+#include "Explosion.h"
 #include <algorithm>
-
-class Scene;
 
 class Player : public Square
 {
 public:
 	std::list<Missile*> missiles;
+	std::list<Explosion*> explosions;
+	void Collide(Square* other) override;
 	Texture *missileTextures;
+	Texture *explosionTexture;
 	char type;
 	float time;
 	float dx, dy;
@@ -25,7 +27,7 @@ public:
 	bool willShoot;
 	float lastShootTimestamp;
 	float lastSpriteUpdateTimestamp;
-	Player(float x, float y, float scale, b2World *World, Texture* texture);
+	Player(float x, float y, float scale, b2World *World, Texture *explode);
 	void update(float deltaTime);
 	void move(float dx, float dy);
 	/* void setMovement(std::function<void(Player*,Engine*,float)> movement); */

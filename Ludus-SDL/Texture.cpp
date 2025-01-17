@@ -90,7 +90,7 @@ void Texture::fulllCycle(){
     spriteColumn += 1;
     spriteRow += spriteColumn/numberOfColumns;
     spriteColumn %= numberOfColumns;
-    spriteRow %= numberOfColumns;
+    spriteRow %= numberOfRows;
 }
 
 void Texture::moveSprite(int row, int column){
