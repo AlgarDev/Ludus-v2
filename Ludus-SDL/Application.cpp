@@ -36,8 +36,7 @@ int main() {
     World->SetContactListener(listener);
 
 	Engine *eng = new Engine(WinWidth, WinHeight);
-	Texture *explosionTexture = new Texture("./Resources/explode64.bmp", 2, 5);
-	Player *player = new Player(3.f, 3.f, 0.0125f, World, explosionTexture);
+	Player *player = new Player(3.f, 3.f, 0.0125f, World);
 
 	Event *spawnRandomMobsEvent = new Event(1, 5);
 	

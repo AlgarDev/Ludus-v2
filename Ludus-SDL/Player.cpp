@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(float x, float y, float scale, b2World* World, Texture *explode) 
+Player::Player(float x, float y, float scale, b2World* World) 
 : Square(x, y, scale, World, new Texture("./Resources/Ship1.bmp", 1, 7)){
 	this->time = 0;
 	this->willShoot = false;
@@ -13,8 +13,6 @@ Player::Player(float x, float y, float scale, b2World* World, Texture *explode)
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 3; //Default Player
 	this->texture->spriteRow = 0; //Default Player
-	this->missileTextures = new Texture("./Resources/missile.bmp", 3, 2);
-	this->explosionTexture = explode;
 }
 
 void Player::Collide(Square* other) {
@@ -48,7 +46,7 @@ void Player::update(float deltaTime) {
 	for ( Missile* missile : missiles) {
         missile->update(deltaTime);
 		if(missile->isExploding()){
-			Explosion *temp = new Explosion( missile->getX(), missile->getY(), this->scale, this->World, this->explosionTexture);
+			Explosion *temp = new Explosion( missile->getX(), missile->getY(), this->scale, this->World, new Texture("./Resources/explode64.bmp", 2, 5));
 			temp->removeCollisions();
 			this->explosions.push_back( temp );
 		}
@@ -101,7 +99,7 @@ void Player::update(float deltaTime) {
 void Player::shoot(){
 	this->lastShootTimestamp = this->time;
 	std::cout << "SHOOTING" << std::endl;
-	Missile *temp = new Missile( 0, getX(), getY(), scale, World, missileTextures);
+	Missile *temp = new Missile( 0, getX(), getY(), scale, World, new Texture("./Resources/missile.bmp", 3, 2));
 	missiles.push_back( temp );
 }
 

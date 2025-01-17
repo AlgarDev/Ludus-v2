@@ -26,7 +26,7 @@ void Loner::Collide(Square *other){
 	    const float frequency = 4.f; // Frequency of oscillation in Hz
 	    // Calculate the sinusoidal force
 	    float dx = amplitude * sin(frequency * time);
-        b2Vec2 force( dx, 1);
+        b2Vec2 force( dx, 0.5f);
 
 	    Body->SetLinearVelocity(force);
     }

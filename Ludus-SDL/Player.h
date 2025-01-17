@@ -27,7 +27,7 @@ public:
 	bool willShoot;
 	float lastShootTimestamp;
 	float lastSpriteUpdateTimestamp;
-	Player(float x, float y, float scale, b2World *World, Texture *explode);
+	Player(float x, float y, float scale, b2World *World);
 	void update(float deltaTime);
 	void move(float dx, float dy);
 	/* void setMovement(std::function<void(Player*,Engine*,float)> movement); */
