@@ -16,7 +16,6 @@ Player::Player(float x, float y, float scale, b2World* World)
 }
 
 void Player::Collide(Square* other) {
-	printf("Player Hit\n");
 }
 void Player::move(float dx, float dy) {
 	b2Vec2 force(dx,dy);
@@ -98,7 +97,6 @@ void Player::update(float deltaTime) {
 
 void Player::shoot(){
 	this->lastShootTimestamp = this->time;
-	std::cout << "SHOOTING" << std::endl;
 	Missile *temp = new Missile( 0, getX(), getY(), 0.01, World, true);
 	missiles.push_back( temp );
 }

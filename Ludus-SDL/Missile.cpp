@@ -25,7 +25,6 @@ void Missile::update(float deltaTime) {
 void Missile::Collide(Square *other){
 	if(isPlayer && other->tag == 3)	didHit = true;
 	else if ( !isPlayer && other->tag == 1) didHit= true;
-	printf("Missile Hit\n");
 }
 
 void Missile::move(float dx, float dy) {

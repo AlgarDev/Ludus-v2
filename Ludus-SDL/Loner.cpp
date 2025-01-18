@@ -1,7 +1,7 @@
 #include "Loner.h"
 
 Loner::Loner(float x, float y, float scale, b2World* World) 
-: Square(x, y, scale, World, new Texture("./Resources/LonerA.bmp", 4, 4)){
+: Square(x, y, scale, World, getRandomTexture()){
 	this->time = 0;
 	this->tag = 3;
 	this->lastShootTimestamp = 0;
@@ -13,7 +13,6 @@ Loner::Loner(float x, float y, float scale, b2World* World)
 }
 
 void Loner::Collide(Square *other){
-    printf("LONER HIT\n");
 }
 
 	void Loner::update(float deltaTime){
@@ -77,7 +76,6 @@ void Loner::Collide(Square *other){
     }
 	void Loner::shoot(){
 	this->lastShootTimestamp = this->time;
-	std::cout << "SHOOTING ENEMY" << std::endl;
 	Missile *temp = new Missile( 0, getX(), getY(), 0.015f, World, false);
 	missiles.push_back( temp );
 }

@@ -32,7 +32,7 @@ void testDefineMovement(Player* entity, Engine* Engine, float deltaTime) {
 int main() {
 	
 	b2World *World = new b2World(b2Vec2(0, 0));	// Physics Engine
-	ContactListener* listener = new ContactListener();
+	ContactListener* listener = new ContactListener();	
     World->SetContactListener(listener);
 
 	Engine *eng = new Engine(WinWidth, WinHeight);

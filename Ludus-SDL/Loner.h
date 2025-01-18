@@ -4,6 +4,7 @@
 #include "Explosion.h"
 #include "Missile.h"
 #include <list>
+#include <ctime>
 
 class Loner : public Square
 {
@@ -23,6 +24,26 @@ public:
 	void renderWithDependent();
 
 private:
+static Texture* getRandomTexture() {
+        // Define a group of textures
+        static std::vector<std::string> textureGroup = {
+            "./Resources/LonerA.bmp",
+            "./Resources/LonerB.bmp",
+            "./Resources/LonerC.bmp",
+        };
+
+        // Seed random generator (only once)
+        static bool seeded = []() {
+            std::srand(static_cast<unsigned>(std::time(0)));
+            return true;
+        }();
+
+        // Randomly pick an index from the group
+        int randomIndex = std::rand() % textureGroup.size();
+
+        // Create and return a new Texture object
+        return new Texture(textureGroup[randomIndex].c_str(), 4, 4);
+    }
 	bool canShoot();
 	void shoot();
 
