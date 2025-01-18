@@ -9,6 +9,7 @@
 #include "Event.h"
 #include "Loner.h"
 #include "Rusher.h"
+#include "Drone.h"
 class Player;
 
 class Scene
@@ -26,6 +27,7 @@ class Scene
 	std::list<Event*> events;
 	std::list<Loner*> loners;
 	std::list<Rusher*> rushers;
+	std::list<Drone*> drones;
     Player *player;
     Square *background;
     b2World *World;

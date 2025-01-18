@@ -24,7 +24,7 @@ void Loner::Collide(Square *other){
 		for ( Missile* missile : missiles) {
         missile->update(deltaTime);
 		if(missile->isExploding()){
-			Explosion *temp = new Explosion( missile->getX(), missile->getY(), this->scale, this->World, new Texture("./Resources/explode64.bmp", 2, 5));
+			Explosion *temp = new Explosion( missile->getX(), missile->getY(), 0.005f, this->World, new Texture("./Resources/explode64.bmp", 2, 5));
 			temp->removeCollisions();
 			this->explosions.push_back( temp );
 		}
