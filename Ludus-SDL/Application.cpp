@@ -36,12 +36,12 @@ int main() {
     World->SetContactListener(listener);
 
 	Engine *eng = new Engine(WinWidth, WinHeight);
-	Player *player = new Player(3.f, 3.f, 0.0125f, World);
+	Player *player = new Player(3.f, 3.f, 0.005f, World);
 
 	Event *spawnRandomMobsEvent = new Event(1, 5);
 	
 	Texture* texture = new Texture("./Resources/Galaxy2.bmp", 1, 1);
-	Square *background = new Square(5, 5, 0.025f, World, texture);
+	Square *background = new Square(5, 5, 0.015f, World, texture);
 	background->removeCollisions();
 	
 	Scene *sc = new Scene(player, World);	//Game Logic

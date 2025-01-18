@@ -58,7 +58,7 @@ void Square::render() {
     glPushMatrix();
     glTranslatef(x, y, 0.0f);
     glRotatef(angle * 180.0f / 3.14159f, 0.0f, 0.0f, 1.0f);
-	glScalef(scale, scale, 0.f);
+	//glScalef(scale, scale, 0.f);
 
 	float x1 = (texture->spriteColumn * texture->spriteWidth) / (float)texture->image->w;  // Left coordinate (normalized)
     float y1 = (texture->spriteRow * texture->spriteHeight) / (float)texture->image->h;  // Bottom coordinate (normalized)
@@ -66,15 +66,15 @@ void Square::render() {
     float y2 = ((texture->spriteRow + 1) * texture->spriteHeight) / (float)texture->image->h;  // Top coordinate (normalized)
     texture->Apply();
 
-	glBegin(GL_QUADS);
+    glBegin(GL_QUADS);
 	glTexCoord2f(x1, y1);
-    glVertex2f( (-width / 2.f) , (-height / 2.f) );
+    glVertex2f( pshape->m_vertices[0].x ,  pshape->m_vertices[0].y );
 	glTexCoord2f(x2, y1);
-    glVertex2f( (width / 2.f) , (-height / 2.f) );
+    glVertex2f( pshape->m_vertices[1].x ,  pshape->m_vertices[1].y );
     glTexCoord2f(x2, y2);
-    glVertex2f( (width / 2.f) , (height / 2.f) );
+    glVertex2f( pshape->m_vertices[2].x , pshape->m_vertices[2].y);
     glTexCoord2f(x1, y2);
-    glVertex2f( (-width / 2.f) , (height / 2.f) );
+    glVertex2f( pshape->m_vertices[3].x , pshape->m_vertices[3].y );
     glEnd();
 
     glPopMatrix(); // Restore the original matrix state

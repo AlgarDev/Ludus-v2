@@ -14,7 +14,7 @@ void Scene::updateScene(float deltaTime){
 
 
 void Scene::handleEvent(IntAndPointer eventResult){
-    loners.push_back(new Loner(5, 0, 0.0125f, World));
+    loners.push_back(new Loner(5, 0, 0.005f, World));
 }
 
 

@@ -67,7 +67,6 @@ void Engine::run() {
         Events(&event);     //Keyboard
         Update(elapsed);    //Update Scene
         Render();           //Render Scene
-        auto end = std::chrono::high_resolution_clock::now();
         World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS); //Physics Engine (Collisions/Movement)
         lastIteration = currentIteration;
         Sleep(16);
