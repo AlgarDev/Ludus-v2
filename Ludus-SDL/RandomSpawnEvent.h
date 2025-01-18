@@ -1,6 +1,7 @@
 #pragma once
 #include "Event.h"
 #include "Loner.h"
+#include "Rusher.h"
 #include <ctime>
 
 class RandomSpawnEvent : public Event
