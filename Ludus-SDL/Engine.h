@@ -8,6 +8,8 @@
 #include "Player.h"
 #include "Square.h"
 #include "Scene.h"
+#include <thread>
+
 
 class Player;
 class Scene;

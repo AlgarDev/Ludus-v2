@@ -54,12 +54,15 @@ void Engine::Events(SDL_Event* event) {
 
 void Engine::run() {
     // Event handler
+    constexpr double targetFrameTime = 1.0 / 60.0;
     SDL_Event event;
     // Main application loop
     const int VELOCITY_ITERATIONS = 8;
     const int POSITION_ITERATIONS = 3;
     double elapsed = 0;
     auto lastIteration = std::chrono::high_resolution_clock::now();
+    double frameCount = 0;
+    double totalTime = 0;
     while (Running) {
         auto currentIteration = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = currentIteration - lastIteration;
@@ -68,8 +71,11 @@ void Engine::run() {
         Events(&event);     //Keyboard
         Update(elapsed);    //Update Scene
         Render();           //Render Scene
+        frameCount++;
         lastIteration = currentIteration;
-        Sleep(16);
+        totalTime += elapsed;
+        if (elapsed < targetFrameTime) std::this_thread::sleep_for(std::chrono::duration<double>(targetFrameTime - elapsed));
+        printf("CurrentFrameRate : %f\n", frameCount/totalTime);
     }
     // Clean up and close the window
     SDL_DestroyWindow(Window);
