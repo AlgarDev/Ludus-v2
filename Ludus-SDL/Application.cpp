@@ -6,29 +6,6 @@
 const int WinWidth = 480;
 const int WinHeight = 640;
 
-IntAndPointer getRandomSpawn(){
-	// Create a random device and generator
-    std::random_device rd;  // Seed
-    std::mt19937 gen(rd()); // Mersenne Twister random number generator
-
-    // Define a uniform integer distribution between 0 and 100
-    std::uniform_int_distribution<> dist(0, 100);
-
-	IntAndPointer result;
-	result.number = dist(gen);
-	result.pointer = (void*)nullptr;
-	return result;
-}
-/*
-void testDefineMovement(Player* entity, Engine* Engine, float deltaTime) {
-	entity->time += deltaTime;
-	const float amplitude = 3.0f; // Maximum force applied
-	const float frequency = 1.f; // Frequency of oscillation in Hz
-	// Calculate the sinusoidal force
-	float force = amplitude * sin(frequency * entity->time);
-	entity->move(force, 0.0f, 0.0f, 'i');
-}
-*/
 int main() {
 	
 	b2World *World = new b2World(b2Vec2(0, 0));	// Physics Engine
@@ -60,9 +37,7 @@ int main() {
 /*
 TAGS
 1 - Player
-2 - Player Missile
+2 - Player Missile tier 1
 3 - Enemy
 4 - Enemy Missile
-
-
 */

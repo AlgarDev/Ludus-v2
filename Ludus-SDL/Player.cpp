@@ -45,7 +45,7 @@ void Player::update(float deltaTime) {
 	for ( Missile* missile : missiles) {
         missile->update(deltaTime);
 		if(missile->isExploding()){
-			Explosion *temp = new Explosion( missile->getX(), missile->getY(), this->scale, this->World, new Texture("./Resources/explode64.bmp", 2, 5));
+			Explosion *temp = new Explosion( missile->getX(), missile->getY(), 0.01f, this->World, new Texture("./Resources/explode16.bmp", 2, 5));
 			temp->removeCollisions();
 			this->explosions.push_back( temp );
 		}
