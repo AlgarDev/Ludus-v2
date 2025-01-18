@@ -10,6 +10,8 @@
 #include "Loner.h"
 #include "Rusher.h"
 #include "Drone.h"
+#include "Asteroid.h"
+
 class Player;
 
 class Scene
@@ -28,6 +30,7 @@ class Scene
 	std::list<Loner*> loners;
 	std::list<Rusher*> rushers;
 	std::list<Drone*> drones;
+	std::list<Asteroid*> asteroids;
     Player *player;
     Square *background;
     b2World *World;

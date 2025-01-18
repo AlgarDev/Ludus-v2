@@ -12,6 +12,7 @@ void Scene::updateScene(float deltaTime){
     for(Loner* loner : loners) loner->update(deltaTime);
     for(Rusher* rusher : rushers) rusher->update(deltaTime);
     for(Drone* drone : drones) drone->update(deltaTime);
+    for(Asteroid* asteroid : asteroids) asteroid->update(deltaTime);
 }
 
 
@@ -27,7 +28,10 @@ void Scene::handleEvent(IntAndPointer eventResult){
         printf("Rusher Spawn Event RIGTH\n");
     }else if(eventResult.number < 12){
         drones.push_back((Drone *) eventResult.pointer);
-        printf("Drone Spawn\n");
+        printf("Drone Spawn Event\n");
+    }else if(eventResult.number < 18){
+        asteroids.push_back((Asteroid *) eventResult.pointer);
+        printf("Asteroid Spawn Event\n");
     }
     else
         printf("Nothing Event\n");
@@ -39,6 +43,7 @@ void Scene::renderScene(){
     for(Loner* loner : loners) loner->renderWithDependent();
     for(Rusher* rusher : rushers) rusher->render();
     for(Drone* drone : drones) drone->render();
+    for(Asteroid* asteroid : asteroids) asteroid->render();
     player->renderWithDependent();
 }
 void Scene::keyboardEvent(SDL_Keycode Key, bool KeyDown){

@@ -61,9 +61,9 @@ void Engine::run() {
     const int POSITION_ITERATIONS = 3;
     double elapsed = 0;
     auto lastIteration = std::chrono::high_resolution_clock::now();
-    double fixedStep = 0.01666d;
-    double frameCount = 0;
-    double totalTime = 0;
+    double fixedStep = 0.01666;
+    //double frameCount = 0;
+    //double totalTime = 0;
     double accumulator = 0;
     while (Running) {
         auto currentIteration = std::chrono::high_resolution_clock::now();
@@ -77,11 +77,11 @@ void Engine::run() {
         Events(&event);     //Keyboard
         Update(elapsed);    //Update Scene
         Render();           //Render Scene
-        frameCount++;
+        //frameCount++;
         lastIteration = currentIteration;
-        totalTime += elapsed;
+        //totalTime += elapsed;
         if (elapsed < targetFrameTime) std::this_thread::sleep_for(std::chrono::duration<double>(targetFrameTime - elapsed));
-        printf("CurrentFrameRate : %f\n", frameCount/totalTime);
+        //printf("CurrentFrameRate : %f\n", frameCount / (totalTime + 1e-9));
     }
     // Clean up and close the window
     SDL_DestroyWindow(Window);
