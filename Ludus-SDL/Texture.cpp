@@ -9,7 +9,7 @@ Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) 
     SDL_PixelFormat* format = image->format;
 
     // Print the pixel format
-    printf("Pixel Format Information:\n");
+    /*printf("Pixel Format Information:\n");
     printf("Bits per pixel: %d\n", format->BitsPerPixel);
     printf("Bytes per pixel: %d\n", format->BytesPerPixel);
     printf("R mask: 0x%X\n", format->Rmask);
@@ -21,7 +21,7 @@ Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) 
     printf("B shift: %d\n", format->Bshift);
     printf("A shift: %d\n", format->Ashift);
     printf("Pixel format: %s\n", SDL_GetPixelFormatName(image->format->format));
-    printf("%d %d %d\n", sizeof((Uint8*)image->pixels), image->h, image->w);
+    printf("%d %d %d\n", sizeof((Uint8*)image->pixels), image->h, image->w);*/
     SDL_Surface* rgbaImage = SDL_CreateRGBSurfaceWithFormat(0, image->w, image->h, 32, SDL_PIXELFORMAT_RGBA32);
     int offset1 = 0;
     int offset2 = 0;

@@ -19,7 +19,7 @@ public:
 	    return result;
     }
     bool canBeCalled(float deltaTime);
-private:
+protected:
     float time;
     float nextCall;
     std::mt19937 gen; // Random number generator

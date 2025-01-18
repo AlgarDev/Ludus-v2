@@ -14,7 +14,12 @@ void Scene::updateScene(float deltaTime){
 
 
 void Scene::handleEvent(IntAndPointer eventResult){
-    loners.push_back(new Loner(5, 0, 0.005f, World));
+    if(eventResult.number < 3){
+        loners.push_back((Loner *) eventResult.pointer);
+        printf("Loner Spawn Event\n");
+    }
+    else
+        printf("Nothing Event\n");
 }
 
 

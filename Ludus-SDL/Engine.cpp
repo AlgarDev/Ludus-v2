@@ -64,10 +64,10 @@ void Engine::run() {
         auto currentIteration = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = currentIteration - lastIteration;
         elapsed = duration.count();
+        World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS); //Physics Engine (Collisions/Movement)
         Events(&event);     //Keyboard
         Update(elapsed);    //Update Scene
         Render();           //Render Scene
-        World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS); //Physics Engine (Collisions/Movement)
         lastIteration = currentIteration;
         Sleep(16);
     }

@@ -2,12 +2,14 @@
 #include "Texture.h"
 #include "Square.h"
 #include "Explosion.h"
+#include "Missile.h"
 #include <list>
 
 class Loner : public Square
 {
 public:
 	std::list<Explosion*> explosions;
+	std::list<Missile*> missiles;
 	void Collide(Square* other) override;
 	Texture *missileTextures;
 	Texture *explosionTexture;

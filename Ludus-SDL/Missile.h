@@ -20,9 +20,9 @@ public:
     float lastSpriteUpdateTimestamp;
 	float time;
 	float hitX, hitY;
-	bool didHit;
+	bool didHit, isPlayer;
     void upgrade();
-	Missile(int missileTier, float x, float y, float scale, b2World *World, Texture* texture);
+	Missile(int missileTier, float x, float y, float scale, b2World *World, bool isPlayer);
 	void update(float deltaTime);
 	void move(float dx, float dy);
 	bool isActive();

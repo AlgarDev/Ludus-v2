@@ -99,7 +99,7 @@ void Player::update(float deltaTime) {
 void Player::shoot(){
 	this->lastShootTimestamp = this->time;
 	std::cout << "SHOOTING" << std::endl;
-	Missile *temp = new Missile( 0, getX(), getY(), scale, World, new Texture("./Resources/missile.bmp", 3, 2));
+	Missile *temp = new Missile( 0, getX(), getY(), 0.01, World, true);
 	missiles.push_back( temp );
 }
 

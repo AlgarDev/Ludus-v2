@@ -40,8 +40,8 @@ Square::~Square() {
 
     // The Texture pointer is not deleted here, assuming it is managed elsewhere
     // If ownership of `texture` belongs to this class, you may add:
-    // delete texture;
-    // texture = nullptr;
+    delete texture;
+    texture = nullptr;
 }
 
 float Square::getX(){
