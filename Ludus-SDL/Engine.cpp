@@ -61,13 +61,19 @@ void Engine::run() {
     const int POSITION_ITERATIONS = 3;
     double elapsed = 0;
     auto lastIteration = std::chrono::high_resolution_clock::now();
+    double fixedStep = 0.01666d;
     double frameCount = 0;
     double totalTime = 0;
+    double accumulator = 0;
     while (Running) {
         auto currentIteration = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> duration = currentIteration - lastIteration;
         elapsed = duration.count();
-        World->Step(elapsed, VELOCITY_ITERATIONS, POSITION_ITERATIONS); //Physics Engine (Collisions/Movement)
+        accumulator += elapsed;
+        while (accumulator >= fixedStep) {
+            World->Step(fixedStep, VELOCITY_ITERATIONS, POSITION_ITERATIONS); //Physics Engine (Collisions/Movement)
+            accumulator -= fixedStep;
+        }
         Events(&event);     //Keyboard
         Update(elapsed);    //Update Scene
         Render();           //Render Scene
