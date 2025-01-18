@@ -67,14 +67,11 @@ void Square::render() {
     texture->Apply();
 
     glBegin(GL_QUADS);
-	glTexCoord2f(x1, y1);
-    glVertex2f( pshape->m_vertices[0].x ,  pshape->m_vertices[0].y );
-	glTexCoord2f(x2, y1);
-    glVertex2f( pshape->m_vertices[1].x ,  pshape->m_vertices[1].y );
-    glTexCoord2f(x2, y2);
-    glVertex2f( pshape->m_vertices[2].x , pshape->m_vertices[2].y);
-    glTexCoord2f(x1, y2);
-    glVertex2f( pshape->m_vertices[3].x , pshape->m_vertices[3].y );
+    for (int i = 0; i < pshape->m_count; ++i) {
+        b2Vec2 vertex = pshape->m_vertices[i];
+        glTexCoord2f((i == 0 || i == 3) ? x1 : x2, (i == 0 || i == 1) ? y1 : y2); // Map texture coordinates
+        glVertex2f(vertex.x, vertex.y); // Render the vertex
+    }
     glEnd();
 
     glPopMatrix(); // Restore the original matrix state
