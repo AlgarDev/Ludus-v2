@@ -7,9 +7,11 @@ Drone::Drone(float x, float y, float scale, b2World* World)
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 0;
 	this->texture->spriteRow = 0;
+	hp = 3;
 }
 
 void Drone::Collide(Square *other){
+	if(other->tag == 2) hp--;
 }
 
 	void Drone::update(float deltaTime){
@@ -30,3 +32,10 @@ void Drone::Collide(Square *other){
 
 	    Body->SetLinearVelocity(force);
     }
+
+bool Drone::isActive(){
+	return !isDead() && 15.0f > getY() ;
+}
+bool Drone::isDead(){
+	return hp <= 0;
+}

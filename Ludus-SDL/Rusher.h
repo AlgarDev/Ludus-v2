@@ -12,8 +12,11 @@ public:
 	Rusher(float x, float y, float scale, b2World* World, bool moveLeft);
 	void update(float deltaTime);
 	void move();
+	bool isActive();
+	bool isDead();
 
 private:
     bool moveLeft;
+	int hp;
 
 };

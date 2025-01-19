@@ -12,5 +12,10 @@ public:
 	Drone(float x, float y, float scale, b2World* World);
 	void update(float deltaTime);
 	void move();
+	bool isActive();
+	bool isDead();
+
+private:
+	int hp;
 
 };

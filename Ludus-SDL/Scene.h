@@ -11,6 +11,7 @@
 #include "Rusher.h"
 #include "Drone.h"
 #include "Asteroid.h"
+#include "Explosion.h"
 
 class Player;
 
@@ -31,7 +32,10 @@ class Scene
 	std::list<Rusher*> rushers;
 	std::list<Drone*> drones;
 	std::list<Asteroid*> asteroids;
+	std::list<Explosion*> explosions;
     Player *player;
     Square *background;
     b2World *World;
+    private:
+    void clearData();
 };

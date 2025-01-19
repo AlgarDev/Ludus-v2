@@ -10,9 +10,19 @@ Loner::Loner(float x, float y, float scale, b2World* World)
 	this->texture->spriteRow = 0;
 	this->missileTextures = new Texture("./Resources/EnWeap6.bmp", 1, 8);
 	this->explosionTexture = new Texture("./Resources/explode64.bmp", 2, 5);
+	hp = 5;
+}
+
+
+bool Loner::isActive(){
+	return !isDead() &&  15.0f > getY();
+}
+bool Loner::isDead(){
+	return 0 >= hp;
 }
 
 void Loner::Collide(Square *other){
+	if(other->tag == 2) hp--;
 }
 
 	void Loner::update(float deltaTime){
@@ -51,30 +61,25 @@ void Loner::Collide(Square *other){
 		this->lastSpriteUpdateTimestamp = this->time;
 		this->texture->fulllCycle();
 	}
-	}
+}
 
-	void Loner::move(){
-	    /*const float amplitude = 3.2f; // Maximum force applied
-	    const float frequency = 4.f; // Frequency of oscillation in Hz
-	    // Calculate the sinusoidal force
-	    float dx = amplitude * sin(frequency * time);*/
-        b2Vec2 force( 0.0f, 1.0f);
-
-	    Body->SetLinearVelocity(force);
-    }
-	void Loner::renderWithDependent(){
-        render();
-		for ( Missile* missile : missiles) {
-        missile->render();
+void Loner::move(){
+    b2Vec2 force( 0.0f, 1.0f);
+    Body->SetLinearVelocity(force);
+}
+void Loner::renderWithDependent(){
+    render();
+	for ( Missile* missile : missiles) {
+    	missile->render();
     }
 	for ( Explosion* explosion : explosions) {
         explosion->render();
     }
-    }
-	bool Loner::canShoot(){
-        return false;
-    }
-	void Loner::shoot(){
+}
+bool Loner::canShoot(){
+    return false;
+}
+void Loner::shoot(){
 	this->lastShootTimestamp = this->time;
 	Missile *temp = new Missile( 0, getX(), getY(), 0.015f, World, false);
 	missiles.push_back( temp );

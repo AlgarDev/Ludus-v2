@@ -22,6 +22,8 @@ public:
 	void update(float deltaTime);
 	void move();
 	void renderWithDependent();
+	bool isActive();
+	bool isDead();
 
 private:
 static Texture* getRandomTexture() {
@@ -46,5 +48,6 @@ static Texture* getRandomTexture() {
     }
 	bool canShoot();
 	void shoot();
+    int hp;
 
 };

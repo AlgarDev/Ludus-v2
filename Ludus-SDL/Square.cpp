@@ -59,9 +59,6 @@ void Square::render() {
     glTranslatef(x, y, 0.0f);
     glRotatef(angle * 180.0f / 3.14159f, 0.0f, 0.0f, 1.0f);
 	//glScalef(scale, scale, 0.f);
-    printf("%lf\n",texture->spriteColumn );
-    printf("%lf\n", texture->spriteWidth);
-    printf("%d\n", texture->image->w);
 	float x1 = (texture->spriteColumn * texture->spriteWidth) / (float)texture->image->w;  // Left coordinate (normalized)
     float y1 = (texture->spriteRow * texture->spriteHeight) / (float)texture->image->h;  // Bottom coordinate (normalized)
     float x2 = ((texture->spriteColumn + 1) * texture->spriteWidth) / (float)texture->image->w;  // Right coordinate (normalized)

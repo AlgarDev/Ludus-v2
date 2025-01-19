@@ -10,6 +10,9 @@ public:
 	Asteroid(float x, float y, float scale, b2World* World, bool isMetal, int tier, float dx, float dy);
 	void update(float deltaTime);
 	void move();
+	bool isActive();
+	bool isDead();
+	float getTier();
 
 private:
 	float time;
@@ -17,5 +20,6 @@ private:
     int tier;
     bool isMetal;
     float dx, dy;
+	int hp;
 
 };

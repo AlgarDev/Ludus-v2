@@ -33,7 +33,7 @@ void Missile::move(float dx, float dy) {
 }
 
 bool Missile::isActive(){
-	return getY() > 0.0f && !didHit;
+	return getY() > 0.0f && !didHit && getY() < 10.0f;
 }
 
 bool Missile::isExploding(){

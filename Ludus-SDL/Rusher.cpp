@@ -8,9 +8,11 @@ Rusher::Rusher(float x, float y, float scale, b2World* World, bool moveLeft)
 	this->texture->spriteColumn = 0;
 	this->texture->spriteRow = 0;
 	this->moveLeft = moveLeft;
+	hp = 3;
 }
 
 void Rusher::Collide(Square *other){
+	if(other->tag == 2) hp--;
 }
 
 	void Rusher::update(float deltaTime){
@@ -22,7 +24,14 @@ void Rusher::Collide(Square *other){
 	    }
 	}
 
-	void Rusher::move(){
-        b2Vec2 force( moveLeft ? -2.25f : 2.25f, 0.0f);
-	    Body->SetLinearVelocity(force);
-    }
+void Rusher::move(){
+    b2Vec2 force( moveLeft ? -2.25f : 2.25f, 0.0f);
+    Body->SetLinearVelocity(force);
+}
+
+bool Rusher::isActive(){
+	return !isDead() && 15.0f > getY() ;
+}
+bool Rusher::isDead(){
+	return hp <= 0;
+}

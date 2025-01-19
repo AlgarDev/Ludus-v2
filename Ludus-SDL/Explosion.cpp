@@ -9,6 +9,7 @@ Explosion::Explosion(float x, float y, float scale, b2World* World, Texture* tex
 	this->texture->spriteRow = 0;
 	this->tag = 2;
 	animationFinished = false;
+	removeCollisions();
 }
 
 void Explosion::update(float deltaTime) {
