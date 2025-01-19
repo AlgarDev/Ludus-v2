@@ -40,4 +40,27 @@ TAGS
 2 - Player Missile tier 1
 3 - Enemy
 4 - Enemy Missile
+5 - Player Missile tier 2
+6 - Player Missile tier 3
+7 - Missile Upgrade
+8 - HP upgrade
+9 - Companion Upgrade
+10 - Companion
+
+
+                "${workspaceFolder}\\Ludus-SDL\\Application.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Asteroid.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Upgrade.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Drone.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Engine.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Event.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Explosion.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Loner.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Missile.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Player.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\RandomSpawnEvent.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Scene.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Rusher.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Square.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Texture.cpp", //All Sources
 */

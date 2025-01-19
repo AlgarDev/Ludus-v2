@@ -34,6 +34,7 @@ public:
 	void setAction(SDL_Keycode Key, bool KeyDown);
 	void useKeyboardState(const Uint8* keyboardState);
 	void renderWithDependent();
+	bool isDead();
 
 private:
 	float validX, validY;
@@ -43,6 +44,9 @@ private:
 	bool canShoot();
 	void shoot();
 	void setPosition(float x, float y);
+	int hp;
+	int missileTier;
+	float lastHitTimeStamp;
 	/* std::function<void(Player*,Engine*,float)> movement; */
 
 };

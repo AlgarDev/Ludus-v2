@@ -4,6 +4,7 @@
 #include "Rusher.h"
 #include "Drone.h"
 #include "Asteroid.h"
+#include "Upgrade.h"
 #include <ctime>
 
 class RandomSpawnEvent : public Event

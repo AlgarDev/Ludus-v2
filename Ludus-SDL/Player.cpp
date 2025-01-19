@@ -13,9 +13,32 @@ Player::Player(float x, float y, float scale, b2World* World)
 	this->lastSpriteUpdateTimestamp = 0;
 	this->texture->spriteColumn = 3; //Default Player
 	this->texture->spriteRow = 0; //Default Player
+	lastHitTimeStamp = 0;
+	missileTier = 0;
+	hp = 15;
 }
-
+/*
+TAGS
+1 - Player
+2 - Player Missile tier 1
+3 - Enemy
+4 - Enemy Missile
+5 - Player Missile tier 2
+6 - Player Missile tier 3
+7 - Missile Upgrade
+8 - HP upgrade
+9 - Companion Upgrade
+10 - Companion
+*/
 void Player::Collide(Square* other) {
+	if(( other->tag == 3 || other->tag == 4 ) && time - lastHitTimeStamp > 0.2f){
+		hp--;
+		printf("hp == %d\n", hp);
+		lastHitTimeStamp = time;
+	}else if( other->tag == 7) missileTier = missileTier == 2 ? missileTier : missileTier+1;
+	else if( other->tag == 8) hp += 3;
+	else if(other->tag == 9) printf("Companion\n");
+	printf("TAG - %d\n", other->tag);
 }
 void Player::move(float dx, float dy) {
 	b2Vec2 force(dx,dy);
@@ -97,7 +120,7 @@ void Player::update(float deltaTime) {
 
 void Player::shoot(){
 	this->lastShootTimestamp = this->time;
-	Missile *temp = new Missile( 0, getX(), getY(), 0.01, World, true);
+	Missile *temp = new Missile( missileTier, getX(), getY(), 0.01, World, true);
 	missiles.push_back( temp );
 }
 
@@ -145,29 +168,24 @@ void Player::setAction(SDL_Keycode Key, bool KeyDown){
 		}
 }
 
+bool Player::isDead(){
+	return 0 >= hp; 
+}
+
 void Player::useKeyboardState(const Uint8* keyboardState){
 	if(keyboardState[SDL_SCANCODE_W]){
 		this->dy = -3;
 	}
 	if(keyboardState[SDL_SCANCODE_A]){
 		this->dx = -3;
-		//std::cout << "HOLDING left" << std::endl;
 	}
 	if(keyboardState[SDL_SCANCODE_S]){
-		this->dy = 3;
-		
+		this->dy = 3;	
 	}
 	if(keyboardState[SDL_SCANCODE_D]){
 		this->dx = 3;
-		//std::cout << "HOLDING rigth" << std::endl;
 	}
 	if(keyboardState[SDL_SCANCODE_SPACE]){
 		this->willShoot = true;	
 	}
 }
-
-/*
-void Player::setMovement(std::function<void(Player*,Engine*,float)> movement) {
-	this->movement = movement;
-}
-*/

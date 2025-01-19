@@ -7,7 +7,7 @@ Texture::Texture(std::string image_path, int numberOfRows, int numberOfColumns)
 }
 
 Texture::Texture(const char* image_path, int numberOfRows, int numberOfColumns) {
-    printf("%s\n", image_path);
+    //printf("%s\n", image_path);
     image = SDL_LoadBMP(image_path);
     if (!image) {
         std::cerr << "Error loading image: " << SDL_GetError() << std::endl;

@@ -20,6 +20,8 @@ IntAndPointer RandomSpawnEvent::call()const{
         result.pointer = (void *)new Drone( dis(gen) , -3, 0.008f, World);
     else if( randomNumber < 18)
         result.pointer = (void *)new Asteroid( dis(gen) , -3, 0.008f, World, std::rand() % 2 ,1 + std::rand() % 3 , 0.0f, 1.5f);
+    else if( randomNumber < 21)
+        result.pointer = (void *)new Upgrade( dis(gen) , -3, 0.008f, World, 1);
     return result;
 }
 

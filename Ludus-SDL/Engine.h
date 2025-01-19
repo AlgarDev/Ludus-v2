@@ -5,13 +5,10 @@
 #include <iostream>
 #include <list>
 #include <chrono>
-#include "Player.h"
 #include "Square.h"
 #include "Scene.h"
 #include <thread>
 
-
-class Player;
 class Scene;
 
 class Engine

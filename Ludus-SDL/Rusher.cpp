@@ -13,6 +13,8 @@ Rusher::Rusher(float x, float y, float scale, b2World* World, bool moveLeft)
 
 void Rusher::Collide(Square *other){
 	if(other->tag == 2) hp--;
+	else if(other->tag == 5) hp -= 2;
+	else if(other->tag == 6) hp -=4;
 }
 
 	void Rusher::update(float deltaTime){

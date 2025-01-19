@@ -9,6 +9,11 @@ Missile::Missile(int missileTier, float x, float y, float scale, b2World* World,
 	this->texture->spriteColumn = 0;
 	this->texture->spriteRow = missileTier;
 	this->tag = isPlayer ? 2 : 4;
+	if (this->tag == 2)
+		if(missileTier == 1)
+			this->tag = 5;
+		else if(missileTier ==2)
+			this->tag = 6;
 	this->isPlayer = isPlayer;
 	didHit = false;
 }

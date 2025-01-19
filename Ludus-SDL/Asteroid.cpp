@@ -17,7 +17,9 @@ tier == 1 ? 2 : tier == 2 ? 3 :5, tier == 1 ? 8 : tier == 2 ? 8 :5)){
 
 void Asteroid::Collide(Square *other){
 	if(isMetal) return;
-	else if( other->tag == 2) hp--;
+	if(other->tag == 2) hp--;
+	else if(other->tag == 5) hp -= 2;
+	else if(other->tag == 6) hp -=4;
 }
 
 void Asteroid::update(float deltaTime){
