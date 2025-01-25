@@ -15,7 +15,7 @@ int main() {
 	Engine *eng = new Engine(WinWidth, WinHeight);
 	Player *player = new Player(3.f, 3.f, 0.005f, World);
 
-	RandomSpawnEvent *spawnRandomMobsEvent = new RandomSpawnEvent(1, 5, World);
+	RandomSpawnEvent *spawnRandomMobsEvent = new RandomSpawnEvent(0.0f, 1.0f, World);
 	
 	Texture* texture = new Texture("./Resources/Galaxy2.bmp", 1, 1);
 	Square *background = new Square(5, 5, 0.015f, World, texture);
@@ -24,6 +24,12 @@ int main() {
 	Scene *sc = new Scene(player, World);	//Game Logic
 	
 	sc->addEvent(spawnRandomMobsEvent);
+    Texture *texture16x16 =new Texture("./Resources/font16x16.bmp", 12, 8);
+    Texture *texture8x8 =new Texture("./Resources/font8x8.bmp", 16, 8);
+    sc->setNumberHud(new Hud(3.0f, 0.5f, 0.3f, 0.3f, texture16x16, 0, 10));
+    sc->addHud(new Hud(0.2f, 0.2f, 0.16f, 0.16f, texture8x8, "Player One"));
+    //sc->addHud(new Hud(3.0f, 0.9f, 0.16f, 0.16f, texture8x8, "Hi Score"));
+    //sc->addHud(new Hud(3.0f, 0.18f, 0.16f, 0.16f, texture8x8, 0));
 
 	sc->addBackground(background);
 	

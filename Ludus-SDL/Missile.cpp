@@ -29,7 +29,7 @@ void Missile::update(float deltaTime) {
 
 void Missile::Collide(Square *other){
 	if(isPlayer && other->tag == 3)	didHit = true;
-	else if ( !isPlayer && other->tag == 1) didHit= true;
+	else if ( !isPlayer && (other->tag == 1 || other->tag == 10)) didHit= true;
 }
 
 void Missile::move(float dx, float dy) {

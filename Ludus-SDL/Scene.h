@@ -13,12 +13,14 @@
 #include "Asteroid.h"
 #include "Explosion.h"
 #include "Upgrade.h"
+#include "Hud.h"
 
 class Player;
 
 class Scene
 {
     public:
+    void addHud(Hud* hud);
     Scene(Player *player, b2World *World);
     void addBackground(Square *background);
     void renderScene();
@@ -27,8 +29,12 @@ class Scene
     void keyboardState(const Uint8* currentKeyStates);
     void addEvent(Event * event);
     void handleEvent(IntAndPointer eventResult);
+    void setNumberHud(Hud *score);
     private:
+    Hud* score;
+    Hud* hp;
 	std::list<Event*> events;
+	std::list<Hud*> huds;
 	std::list<Loner*> loners;
 	std::list<Rusher*> rushers;
 	std::list<Drone*> drones;

@@ -3,9 +3,12 @@
 Scene::Scene(Player *player, b2World *World){
     this->player = player;
     this->World = World;
+    hp = new Hud(0.6f, 9.5f, 0.3f, 0.3f, new Texture("./Resources/font16x16.bmp", 12, 8), 20, 2);
+    addHud(hp);
 }
 
 void Scene::updateScene(float deltaTime){
+    hp->setNumber(player->getHp());
     if(!player->isDead())
         player->update(deltaTime);
     for(Explosion *explosion : explosions) explosion->update(deltaTime);
@@ -13,34 +16,45 @@ void Scene::updateScene(float deltaTime){
     for(Event* event : events)  if(event->canBeCalled(deltaTime))   handleEvent(event->call());
     for(Loner* loner : loners) {
         loner->update(deltaTime);
-        if(loner->isDead())
+        if(loner->isDead()){
+            score->setNumber(score->getNumber() + 25);
             explosions.push_back(new Explosion(loner->getX(), loner->getY(), 0.01f, this->World, new Texture("./Resources/explode64.bmp", 2, 5)));
+        }
     }
     for(Rusher* rusher : rushers) {
         rusher->update(deltaTime);
-        if(rusher->isDead())
+        if(rusher->isDead()){
+            score->setNumber(score->getNumber() + 50);
             explosions.push_back(new Explosion(rusher->getX(), rusher->getY(), 0.005f , this->World, new Texture("./Resources/explode64.bmp", 2, 5)));
+        }
     }
 
     for(Drone* drone : drones) {
         drone->update(deltaTime);
-        if(drone->isDead())
+        if(drone->isDead()){
+            score->setNumber(score->getNumber() + 3);
             explosions.push_back(new Explosion(drone->getX(), drone->getY(), 0.005f , this->World, new Texture("./Resources/explode64.bmp", 2, 5)));
+        }
     }
     
     for(Asteroid* asteroid : asteroids) {
         asteroid->update(deltaTime);
         if(asteroid->isDead()){
             switch((int)asteroid->getTier()){
+                case 1:
+                    score->setNumber(score->getNumber() + 5);
+                break;
                 case 2:
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 1 , -1.5f, 1.0f));
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 1 , 1.0f, 1.5f));
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 1 , -1.0f, 1.5f));
+                    score->setNumber(score->getNumber() + 10);
                 break;
                 case 3:
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 2 , 1.5f, 1.0f));
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 2 , 1.0f, 1.5f));
                     asteroids.push_back(new Asteroid( asteroid->getX() , asteroid->getY(), 0.008f, World, false  , 2 , -1.0f, 1.5f));
+                    score->setNumber(score->getNumber() + 15);
                 break;
             }
             explosions.push_back(new Explosion(asteroid->getX(), asteroid->getY(), 0.01f , this->World, new Texture("./Resources/explode64.bmp", 2, 5)));
@@ -130,6 +144,7 @@ void Scene::renderScene(){
     for(Explosion* explosion : explosions) explosion->render();
     if(!player->isDead())
         player->renderWithDependent();
+    for(Hud* hud : huds) hud->render();
 }
 void Scene::keyboardEvent(SDL_Keycode Key, bool KeyDown){
     player->setAction(Key, KeyDown);
@@ -140,6 +155,16 @@ void Scene::keyboardState(const Uint8* currentKeyStates){
 
 void Scene::addEvent(Event * event){
     this->events.push_back( event );
+}
+
+
+void Scene::setNumberHud(Hud *score){
+    this->score = score;
+    addHud(score);
+}
+
+void Scene::addHud(Hud* hud){
+    this->huds.push_back( hud );
 }
 
 void Scene::addBackground(Square *background){

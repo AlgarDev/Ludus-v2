@@ -25,7 +25,7 @@ TAGS
 */
 
 void Upgrade::Collide(Square *other){
-	if(other->tag == 1) isActiveUpgrade = false;
+	if(other->tag == 1 || (other->tag == 10 && tag != 9) ) isActiveUpgrade = false;
 }
 
 void Upgrade::update(float deltaTime){

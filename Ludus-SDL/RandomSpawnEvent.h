@@ -15,4 +15,5 @@ public:
 
 private:
 b2World *World;
+mutable std::mt19937 gen;
 };

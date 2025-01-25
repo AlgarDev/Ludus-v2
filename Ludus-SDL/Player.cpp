@@ -16,6 +16,10 @@ Player::Player(float x, float y, float scale, b2World* World)
 	lastHitTimeStamp = 0;
 	missileTier = 0;
 	hp = 15;
+	hasLeftCompanion = false;
+	hasRigthCompanion = false;
+	leftToCreate = false;
+	rigthToCreate = false;
 }
 /*
 TAGS
@@ -37,18 +41,24 @@ void Player::Collide(Square* other) {
 		lastHitTimeStamp = time;
 	}else if( other->tag == 7) missileTier = missileTier == 2 ? missileTier : missileTier+1;
 	else if( other->tag == 8) hp += 3;
-	else if(other->tag == 9) printf("Companion\n");
-	printf("TAG - %d\n", other->tag);
+	else if(other->tag == 9){
+		if(!hasLeftCompanion)
+			leftToCreate = true;
+		else if(!hasRigthCompanion)
+			rigthToCreate = true;
+	}
 }
 void Player::move(float dx, float dy) {
 	b2Vec2 force(dx,dy);
-	//apply immediate force upwards
-
+	if(hasRigthCompanion) rigth->move(dx, dy);
+	if(hasLeftCompanion) left->move(dx, dy);
 	Body->SetLinearVelocity(force);
 }
 
 void Player::setPosition(float x, float y){
 	b2Vec2 newPosition(x, y);  // Create a new vector with the desired coordinates
+	if(hasRigthCompanion) rigth->setPosition(x, y);
+	if(hasLeftCompanion) left->setPosition(x, y);
 	Body->SetTransform(newPosition, Body->GetAngle());
 }
 
@@ -65,6 +75,29 @@ bool Player::isPositionValid(){
 }
 
 void Player::update(float deltaTime) {
+	if(leftToCreate){
+			hasLeftCompanion = true;
+			leftToCreate = false;
+			left = new Companion(getX() - 0.6f, getY() + 0.1f, scale, World);
+		}
+	if(rigthToCreate){
+		rigthToCreate = false;
+		hasRigthCompanion = true;
+		rigth = new Companion(getX() + 0.6f, getY() + 0.1f, scale, World);
+	}
+	if(hasRigthCompanion){
+		rigth->update(deltaTime);
+		if(rigth->isDead()){
+			hasRigthCompanion = false;
+			delete rigth;
+		}
+	}if(hasLeftCompanion){
+		left->update(deltaTime);
+		if(left->isDead()){
+			hasLeftCompanion = false;
+			delete left;
+		}
+	}
 	for ( Missile* missile : missiles) {
         missile->update(deltaTime);
 		if(missile->isExploding()){
@@ -105,6 +138,10 @@ void Player::update(float deltaTime) {
 	if(willShoot && canShoot()){
 		shoot();
 	}
+	if(hasLeftCompanion && left->canShoot())
+		shoot(left->getX(), left->getY(), left->missileTier);
+	if(hasRigthCompanion && rigth->canShoot())
+		shoot(rigth->getX(), rigth->getY(), rigth->missileTier);
 	if(this->dx > 0 
 	&& this->texture->spriteColumn +1 < this->texture->numberOfColumns 
 	&& this->time - this->lastSpriteUpdateTimestamp >= 0.1f){
@@ -116,16 +153,28 @@ void Player::update(float deltaTime) {
 		this->lastSpriteUpdateTimestamp = this->time;
 		this->texture->cycleLeft();
 	}else if( 0 == this->dx) this->texture->moveSprite(0, 3);
+
+
+
+
 }
 
 void Player::shoot(){
+	shoot(getX(), getY(), missileTier);
+}
+
+void Player::shoot(float x,float y, int tier){
 	this->lastShootTimestamp = this->time;
-	Missile *temp = new Missile( missileTier, getX(), getY(), 0.01, World, true);
+	Missile *temp = new Missile( tier, x, y, 0.01f, World, true);
 	missiles.push_back( temp );
 }
 
 bool Player::canShoot(){
 	return this->time - this->lastShootTimestamp >= this->shootDelay;
+}
+
+int Player::getHp(){
+	return hp;
 }
 
 void Player::renderWithDependent(){
@@ -136,6 +185,8 @@ void Player::renderWithDependent(){
 	for ( Explosion* explosion : explosions) {
         explosion->render();
     }
+	if(hasLeftCompanion) left->render();
+	if(hasRigthCompanion) rigth->render();
 }
 
 
