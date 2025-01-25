@@ -25,7 +25,7 @@ void Companion::update(float deltaTime)
     if(this->time - this->lastSpriteUpdateTimestamp >= 0.05f){
 	    this->lastSpriteUpdateTimestamp = this->time;
 	    this->texture->fulllCycle();
-        if(this->texture->spriteRow == 5) this->texture->spriteRow = 0;
+        if(this->texture->spriteRow == 4) this->texture->spriteRow = 0;
     }
 }
 
