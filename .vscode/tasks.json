@@ -8,7 +8,23 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
-                "${workspaceFolder}\\Ludus-SDL\\*.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Application.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Asteroid.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Drone.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Engine.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Event.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Explosion.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Loner.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Missile.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Player.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\RandomSpawnEvent.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Scene.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Rusher.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Square.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Texture.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Hud.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Companion.cpp", //All Sources
+                "${workspaceFolder}\\Ludus-SDL\\Upgrade.cpp", //All Sources
                 "-I${workspaceFolder}\\Dependencies\\mingw64\\include",   //Box2D
                 "-I${workspaceFolder}\\Dependencies\\glfw-3.4.bin.WIN64\\include",  //GLFW
                 "-I${workspaceFolder}\\Dependencies\\SDL2\\include",    //SDL2

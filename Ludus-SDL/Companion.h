@@ -18,7 +18,9 @@ public:
 	bool isDead();
     bool canShoot();
     void setPosition(float x, float y);
-
+	bool isValidX();
+	bool isValidY();
+	bool isPositionValid();
 private:
     int hp;
 };

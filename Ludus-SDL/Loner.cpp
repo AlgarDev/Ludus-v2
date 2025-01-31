@@ -24,7 +24,7 @@ bool Loner::isDead(){
 void Loner::Collide(Square *other){
 	if(other->tag == 2) hp--;
 	else if(other->tag == 5) hp -= 2;
-	else if(other->tag == 6) hp -=4;
+	else if(other->tag == 6) hp -= 4;
 }
 
 	void Loner::update(float deltaTime){

@@ -49,17 +49,47 @@ void Player::Collide(Square* other) {
 	}
 }
 void Player::move(float dx, float dy) {
-	b2Vec2 force(dx,dy);
-	if(hasRigthCompanion) rigth->move(dx, dy);
-	if(hasLeftCompanion) left->move(dx, dy);
-	Body->SetLinearVelocity(force);
+    b2Vec2 force(dx,dy);
+
+    // Move companions with boundary checks
+    if(hasRigthCompanion) {
+        rigth->move(dx, dy);
+        // Check if companion is within valid bounds
+        if(!rigth->isPositionValid()) {
+            rigth->setPosition(validX + 0.6f, validY + 0.1f); // Reset to last valid position
+        }
+    }
+
+    if(hasLeftCompanion) {
+        left->move(dx, dy);
+        // Check if companion is within valid bounds
+        if(!left->isPositionValid()) {
+            left->setPosition(validX - 0.6f, validY + 0.1f); // Reset to last valid position
+        }
+    }
+
+    Body->SetLinearVelocity(force);
 }
 
 void Player::setPosition(float x, float y){
-	b2Vec2 newPosition(x, y);  // Create a new vector with the desired coordinates
-	if(hasRigthCompanion) rigth->setPosition(x, y);
-	if(hasLeftCompanion) left->setPosition(x, y);
-	Body->SetTransform(newPosition, Body->GetAngle());
+    b2Vec2 newPosition(x, y);
+
+    // Set position for companions with boundary checks
+    if(hasRigthCompanion) {
+        rigth->setPosition(x + 0.6f, y + 0.1f);
+        if(!rigth->isPositionValid()) {
+            rigth->setPosition(validX + 0.6f, validY + 0.1f); // Reset to last valid position
+        }
+    }
+
+    if(hasLeftCompanion) {
+        left->setPosition(x - 0.6f, y + 0.1f);
+        if(!left->isPositionValid()) {
+            left->setPosition(validX - 0.6f, validY + 0.1f); // Reset to last valid position
+        }
+    }
+
+    Body->SetTransform(newPosition, Body->GetAngle());
 }
 
 bool Player::isValidX(){
@@ -138,9 +168,9 @@ void Player::update(float deltaTime) {
 	if(willShoot && canShoot()){
 		shoot();
 	}
-	if(hasLeftCompanion && left->canShoot())
+	if(hasLeftCompanion && left->canShoot() && willShoot)
 		shoot(left->getX(), left->getY(), left->missileTier);
-	if(hasRigthCompanion && rigth->canShoot())
+	if(hasRigthCompanion && rigth->canShoot() && willShoot)
 		shoot(rigth->getX(), rigth->getY(), rigth->missileTier);
 	if(this->dx > 0 
 	&& this->texture->spriteColumn +1 < this->texture->numberOfColumns 

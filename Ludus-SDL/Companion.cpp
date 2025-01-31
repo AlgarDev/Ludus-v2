@@ -52,3 +52,15 @@ bool Companion::canShoot(){
     }
     return false;
 }
+
+bool Companion::isValidX(){
+	return getX() > 0.0f && 10.0f < getX();
+}
+
+bool Companion::isValidY(){
+	return getY() > 0.0f && 10.0f < getY();
+}
+
+bool Companion::isPositionValid(){
+	return isValidX() && isValidY();
+}
