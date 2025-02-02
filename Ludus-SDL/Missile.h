@@ -16,13 +16,12 @@ class Missile : public Square
 public:
 	void Collide(Square* other) override;
 	~Missile();
-	int missileTier;
     float lastSpriteUpdateTimestamp;
 	float time;
 	float hitX, hitY;
 	bool didHit, isPlayer;
     void upgrade();
-	Missile(int missileTier, float x, float y, float scale, b2World *World, bool isPlayer);
+	Missile(float x, float y, float scale, b2World *World, bool isPlayer);
 	void update(float deltaTime);
 	void move(float dx, float dy);
 	bool isActive();

@@ -1,19 +1,13 @@
 #include "Missile.h"
 
 
-Missile::Missile(int missileTier, float x, float y, float scale, b2World* World, bool isPlayer) 
+Missile::Missile(float x, float y, float scale, b2World* World, bool isPlayer) 
 : Square(x, y, scale, World, isPlayer ? new Texture("./Resources/missile.bmp", 3, 2) : new Texture("./Resources/EnWeap6.bmp", 1, 8)){
 	this->time = 0;
     this->lastSpriteUpdateTimestamp = 0;
-    this->missileTier = missileTier;
 	this->texture->spriteColumn = 0;
-	this->texture->spriteRow = missileTier;
+	this->texture->spriteRow = 0;
 	this->tag = isPlayer ? 2 : 4;
-	if (this->tag == 2)
-		if(missileTier == 1)
-			this->tag = 5;
-		else if(missileTier ==2)
-			this->tag = 6;
 	this->isPlayer = isPlayer;
 	didHit = false;
 }

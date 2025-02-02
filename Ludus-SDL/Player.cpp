@@ -14,12 +14,7 @@ Player::Player(float x, float y, float scale, b2World* World)
 	this->texture->spriteColumn = 3; //Default Player
 	this->texture->spriteRow = 0; //Default Player
 	lastHitTimeStamp = 0;
-	missileTier = 0;
 	hp = 15;
-	hasLeftCompanion = false;
-	hasRigthCompanion = false;
-	leftToCreate = false;
-	rigthToCreate = false;
 }
 /*
 TAGS
@@ -27,68 +22,21 @@ TAGS
 2 - Player Missile tier 1
 3 - Enemy
 4 - Enemy Missile
-5 - Player Missile tier 2
-6 - Player Missile tier 3
-7 - Missile Upgrade
-8 - HP upgrade
-9 - Companion Upgrade
-10 - Companion
 */
 void Player::Collide(Square* other) {
 	if(( other->tag == 3 || other->tag == 4 ) && time - lastHitTimeStamp > 0.2f){
 		hp--;
 		printf("hp == %d\n", hp);
 		lastHitTimeStamp = time;
-	}else if( other->tag == 7) missileTier = missileTier == 2 ? missileTier : missileTier+1;
-	else if( other->tag == 8) hp += 3;
-	else if(other->tag == 9){
-		if(!hasLeftCompanion)
-			leftToCreate = true;
-		else if(!hasRigthCompanion)
-			rigthToCreate = true;
 	}
 }
 void Player::move(float dx, float dy) {
     b2Vec2 force(dx,dy);
-
-    // Move companions with boundary checks
-    if(hasRigthCompanion) {
-        rigth->move(dx, dy);
-        // Check if companion is within valid bounds
-        if(!rigth->isPositionValid()) {
-            rigth->setPosition(validX + 0.6f, validY + 0.1f); // Reset to last valid position
-        }
-    }
-
-    if(hasLeftCompanion) {
-        left->move(dx, dy);
-        // Check if companion is within valid bounds
-        if(!left->isPositionValid()) {
-            left->setPosition(validX - 0.6f, validY + 0.1f); // Reset to last valid position
-        }
-    }
-
     Body->SetLinearVelocity(force);
 }
 
 void Player::setPosition(float x, float y){
     b2Vec2 newPosition(x, y);
-
-    // Set position for companions with boundary checks
-    if(hasRigthCompanion) {
-        rigth->setPosition(x + 0.6f, y + 0.1f);
-        if(!rigth->isPositionValid()) {
-            rigth->setPosition(validX + 0.6f, validY + 0.1f); // Reset to last valid position
-        }
-    }
-
-    if(hasLeftCompanion) {
-        left->setPosition(x - 0.6f, y + 0.1f);
-        if(!left->isPositionValid()) {
-            left->setPosition(validX - 0.6f, validY + 0.1f); // Reset to last valid position
-        }
-    }
-
     Body->SetTransform(newPosition, Body->GetAngle());
 }
 
@@ -105,29 +53,6 @@ bool Player::isPositionValid(){
 }
 
 void Player::update(float deltaTime) {
-	if(leftToCreate){
-			hasLeftCompanion = true;
-			leftToCreate = false;
-			left = new Companion(getX() - 0.6f, getY() + 0.1f, scale, World);
-		}
-	if(rigthToCreate){
-		rigthToCreate = false;
-		hasRigthCompanion = true;
-		rigth = new Companion(getX() + 0.6f, getY() + 0.1f, scale, World);
-	}
-	if(hasRigthCompanion){
-		rigth->update(deltaTime);
-		if(rigth->isDead()){
-			hasRigthCompanion = false;
-			delete rigth;
-		}
-	}if(hasLeftCompanion){
-		left->update(deltaTime);
-		if(left->isDead()){
-			hasLeftCompanion = false;
-			delete left;
-		}
-	}
 	for ( Missile* missile : missiles) {
         missile->update(deltaTime);
 		if(missile->isExploding()){
@@ -168,10 +93,6 @@ void Player::update(float deltaTime) {
 	if(willShoot && canShoot()){
 		shoot();
 	}
-	if(hasLeftCompanion && left->canShoot() && willShoot)
-		shoot(left->getX(), left->getY(), left->missileTier);
-	if(hasRigthCompanion && rigth->canShoot() && willShoot)
-		shoot(rigth->getX(), rigth->getY(), rigth->missileTier);
 	if(this->dx > 0 
 	&& this->texture->spriteColumn +1 < this->texture->numberOfColumns 
 	&& this->time - this->lastSpriteUpdateTimestamp >= 0.1f){
@@ -190,12 +111,12 @@ void Player::update(float deltaTime) {
 }
 
 void Player::shoot(){
-	shoot(getX(), getY(), missileTier);
+	shoot(getX(), getY());
 }
 
-void Player::shoot(float x,float y, int tier){
+void Player::shoot(float x,float y){
 	this->lastShootTimestamp = this->time;
-	Missile *temp = new Missile( tier, x, y, 0.01f, World, true);
+	Missile *temp = new Missile( x, y, 0.01f, World, true);
 	missiles.push_back( temp );
 }
 
@@ -215,8 +136,6 @@ void Player::renderWithDependent(){
 	for ( Explosion* explosion : explosions) {
         explosion->render();
     }
-	if(hasLeftCompanion) left->render();
-	if(hasRigthCompanion) rigth->render();
 }
 
 

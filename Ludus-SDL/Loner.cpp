@@ -83,6 +83,6 @@ bool Loner::canShoot(){
 }
 void Loner::shoot(){
 	this->lastShootTimestamp = this->time;
-	Missile *temp = new Missile( 0, getX(), getY(), 0.015f, World, false);
+	Missile *temp = new Missile( getX(), getY(), 0.015f, World, false);
 	missiles.push_back( temp );
 }

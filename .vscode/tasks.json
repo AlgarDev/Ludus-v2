@@ -23,8 +23,6 @@
                 "${workspaceFolder}\\Ludus-SDL\\Square.cpp", //All Sources
                 "${workspaceFolder}\\Ludus-SDL\\Texture.cpp", //All Sources
                 "${workspaceFolder}\\Ludus-SDL\\Hud.cpp", //All Sources
-                "${workspaceFolder}\\Ludus-SDL\\Companion.cpp", //All Sources
-                "${workspaceFolder}\\Ludus-SDL\\Upgrade.cpp", //All Sources
                 "-I${workspaceFolder}\\Dependencies\\mingw64\\include",   //Box2D
                 "-I${workspaceFolder}\\Dependencies\\glfw-3.4.bin.WIN64\\include",  //GLFW
                 "-I${workspaceFolder}\\Dependencies\\SDL2\\include",    //SDL2

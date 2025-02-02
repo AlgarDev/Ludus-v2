@@ -10,7 +10,6 @@
 #include "Missile.h"
 #include "Engine.h"
 #include "Explosion.h"
-#include "Companion.h"
 #include <algorithm>
 
 class Player : public Square
@@ -41,18 +40,13 @@ public:
 private:
 	float validX, validY;
 	bool isPositionValid();
-	Companion *left;
-	Companion *rigth;
-	bool leftToCreate, rigthToCreate;
-	bool hasLeftCompanion, hasRigthCompanion;
 	bool isValidX();
 	bool isValidY();
 	bool canShoot();
 	void shoot();
-	void shoot(float x, float y, int tier);
+	void shoot(float x, float y);
 	void setPosition(float x, float y);
 	int hp;
-	int missileTier;
 	float lastHitTimeStamp;
 	/* std::function<void(Player*,Engine*,float)> movement; */
 

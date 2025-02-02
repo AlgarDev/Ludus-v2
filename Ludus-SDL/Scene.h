@@ -12,7 +12,6 @@
 #include "Drone.h"
 #include "Asteroid.h"
 #include "Explosion.h"
-#include "Upgrade.h"
 #include "Hud.h"
 
 class Player;
@@ -40,7 +39,6 @@ class Scene
 	std::list<Drone*> drones;
 	std::list<Asteroid*> asteroids;
 	std::list<Explosion*> explosions;
-	std::list<Upgrade*> upgrades;
     Player *player;
     Square *background;
     b2World *World;

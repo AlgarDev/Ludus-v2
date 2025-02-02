@@ -12,7 +12,6 @@ void Scene::updateScene(float deltaTime){
     if(!player->isDead())
         player->update(deltaTime);
     for(Explosion *explosion : explosions) explosion->update(deltaTime);
-    for(Upgrade* upgrade : upgrades) upgrade->update(deltaTime);
     for(Event* event : events)  if(event->canBeCalled(deltaTime))   handleEvent(event->call());
     for(Loner* loner : loners) {
         loner->update(deltaTime);
@@ -65,13 +64,6 @@ void Scene::updateScene(float deltaTime){
 }
 
 void Scene::clearData(){
-    upgrades.remove_if([](Upgrade* upgrade) {
-		if(!upgrade->isActive()){
-			delete upgrade;
-			return true;
-		}
-		return false;
-	});
     drones.remove_if([](Drone* drone) {
 		if(!drone->isActive()){
 			delete drone;
@@ -125,9 +117,6 @@ void Scene::handleEvent(IntAndPointer eventResult){
     }else if(eventResult.number < 18){
         asteroids.push_back((Asteroid *) eventResult.pointer);
         printf("Asteroid Spawn Event\n");
-    }else if(eventResult.number < 20){
-        upgrades.push_back((Upgrade *) eventResult.pointer);
-        printf("Upgrade Spawn Event\n");
     }
     else
         printf("Nothing Event\n");
@@ -137,7 +126,6 @@ void Scene::handleEvent(IntAndPointer eventResult){
 void Scene::renderScene(){
     background->render();
     for(Loner* loner : loners) loner->renderWithDependent();
-    for(Upgrade* upgrade : upgrades) upgrade->render();
     for(Rusher* rusher : rushers) rusher->render();
     for(Drone* drone : drones) drone->render();
     for(Asteroid* asteroid : asteroids) asteroid->render();
