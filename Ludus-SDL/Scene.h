@@ -9,17 +9,13 @@
 #include "Event.h"
 #include "Loner.h"
 #include "Rusher.h"
-#include "Drone.h"
-#include "Asteroid.h"
 #include "Explosion.h"
-#include "Hud.h"
 
 class Player;
 
 class Scene
 {
     public:
-    void addHud(Hud* hud);
     Scene(Player *player, b2World *World);
     void addBackground(Square *background);
     void renderScene();
@@ -28,16 +24,10 @@ class Scene
     void keyboardState(const Uint8* currentKeyStates);
     void addEvent(Event * event);
     void handleEvent(IntAndPointer eventResult);
-    void setNumberHud(Hud *score);
     private:
-    Hud* score;
-    Hud* hp;
 	std::list<Event*> events;
-	std::list<Hud*> huds;
 	std::list<Loner*> loners;
 	std::list<Rusher*> rushers;
-	std::list<Drone*> drones;
-	std::list<Asteroid*> asteroids;
 	std::list<Explosion*> explosions;
     Player *player;
     Square *background;
